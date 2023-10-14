@@ -1,38 +1,29 @@
 .App {
+  display: flex;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-family: "Markazi Text";
+  font-weight: 500;
+  font-size: 64pt;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h2 {
+  font-family: "Markazi Text";
+  font-weight: 400;
+  font-size: 40pt;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h3 {
+  font-family: "Karla";
+  font-weight: 900;
+  font-size: 20pt;
 }
-
-.App-link {
-  color: #61dafb;
+h4 {
+  font-family: "Karla";
+  font-weight: bold;
+  font-size: 18pt;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+p {
+  font-family: "Karla";
+  font-weight: 400;
+  font-size: 16pt;
 }
