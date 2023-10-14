@@ -27,3 +27,9 @@ p {
   font-weight: 400;
   font-size: 16pt;
 }
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap");
+:root {
+  --primary-color: #f3cd21;
+  --seconday-color: #4b5e57;
+  --header-font: "Markazi Text", sans-serif;
+}

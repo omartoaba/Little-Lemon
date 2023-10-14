@@ -1,8 +1,12 @@
 import React from 'react'
-
+import HeroSection from './HeroSection.jsx'
+import CAT from './CAT.jsx'
 function Home() {
   return (
-    <div>Home</div>
+    <div className='home_page'>
+        <HeroSection/>
+        <CAT/>
+    </div>
   )
 }
 
