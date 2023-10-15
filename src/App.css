@@ -33,3 +33,25 @@ p {
   --seconday-color: #4b5e57;
   --header-font: "Markazi Text", sans-serif;
 }
+.primaryButton {
+  background-color: var(--primary-color);
+  color: black;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--header-font);
+}
+.secondaryButton {
+  background-color: var(--seconday-color);
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--header-font);
+}
