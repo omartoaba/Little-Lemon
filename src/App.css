@@ -43,6 +43,7 @@ p {
   font-size: 15px;
   font-weight: 700;
   font-family: var(--header-font);
+  cursor: pointer;
 }
 .secondaryButton {
   background-color: var(--seconday-color);
@@ -54,4 +55,14 @@ p {
   font-size: 15px;
   font-weight: 700;
   font-family: var(--header-font);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.secondaryButton:hover {
+  box-shadow: rgba(75, 94, 87, 0.12) 0px 2px 4px 0px,
+    rgba(75, 94, 87, 0.32) 0px 2px 16px 0px;
+}
+.primaryButton:hover {
+  box-shadow: rgba(243, 205, 33, 0.12) 0px 2px 4px 0px,
+    rgba(243, 205, 33, 0.32) 0px 2px 16px 0px;
 }
