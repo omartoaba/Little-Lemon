@@ -4,12 +4,23 @@ import { useForm } from "react-hook-form";
 import './BookingForm.css'
 import { useState } from 'react'
 
-function BookingForm() {
-  
-    const { register, handleSubmit, formState: { errors } } = useForm()
+function BookingForm({availibletimes,setavailibletimes}) {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+      defaultValues: { adults: '',
+        time: '',
+        phone: '',
+        email: '',
+        date:''
+    }
+    })
     
   const onSubmit = (data) => {
-      console.log(data)
+       var times = [...availibletimes];
+       var target = times.find(t => {return t.time === data.time});
+       console.log(data);
+       console.log(target);
+       target.state = "Booked"
+      setavailibletimes(times);
   }
 
   const [location,setlocation] = useState('inside');
@@ -43,19 +54,18 @@ function BookingForm() {
       <div className="bookingform_option">
           <img src={Adults} className='bookingform_option-img'/>
           <input className='bookingform_option-input'  type='number' placeholder='Guests'
-          {...register('adults',{required:true,min:1,max:15})}/>
+          {...register("adults")}/>
         </div>
         <div className="bookingform_option">
           <img src={Clock}className='bookingform_option-img'/>
-          <select id="res-time " className='bookingform_option-select'>
-          <option>Select Time</option>
-      <option>17:00</option>
-      <option>18:00</option>
-      <option>19:00</option>
-      <option>20:00</option>
-      <option>21:00</option>
-      <option>22:00</option>
-   </select>
+          <select id="res-time " className='bookingform_option-select' {...register("time")}>
+               <option selected>Select Time</option>
+            {availibletimes.map((time,index) => {
+              if(time.state === 'Availible') {
+                return <option key={index} value={time.time}>{time.time}</option>
+              }     
+            })}
+          </select>
         </div>
         <div className="bookingform_option">
           <img src={Date}className='bookingform_option-img'/>
@@ -73,17 +83,17 @@ function BookingForm() {
         <div className="bookingform_option">
           <img src={Customer}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='text' placeholder='Your Name'
-              {...register('customer',{required:true,min:1,max:15})}/>
+              {...register('customer')}/>
         </div>
         <div className="bookingform_option">
           <img src={Phone}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='phone' placeholder='Phone'
-          {...register('phone',{required:true,min:1,max:15})}/>
+          {...register('phone')}/>
         </div>
         <div className="bookingform_option">
           <img src={Mail}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='email' placeholder='Email'
-            {...register('email',{required:true,min:1,max:15})}/>
+            {...register('email')}/>
         </div>
         <div className="bookingform_footer">
         <button className='primaryButton' type='submit'>Reserve Table</button>
