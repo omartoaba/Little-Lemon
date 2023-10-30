@@ -2,8 +2,9 @@ h1 {
 }
 .herosection_banner {
   background-color: var(--seconday-color);
-  margin: 0 2rem;
+  margin: 0 5rem;
   padding: 0 10rem;
+  width: 100%;
 }
 .herosection_container {
   display: flex;

@@ -7,6 +7,9 @@ import Date from '../assets/event.png'
 import Customer from '../assets/man.png'
 import Mail from '../assets/mail.png'
 import Phone from '../assets/phone.png'
+import GreekSalad from '../assets/GreekSalad.jpg';
+import LemonDessert from '../assets/lemondessert.jpg';
+import Brushetta from '../assets/brushetta.jpg';
 
 
 export {
@@ -18,5 +21,8 @@ export {
     Date,
     Customer,
     Mail,
-    Phone
+    Phone,
+    GreekSalad,
+    LemonDessert,
+    Brushetta
 }
