@@ -3,6 +3,7 @@ import {Inside,Outside,Adults,Children,Clock,Date,Customer,Mail,Phone} from './i
 import { useForm } from "react-hook-form";
 import './BookingForm.css'
 import { useState } from 'react'
+import { redirect } from 'react-router-dom';
 
 function BookingForm({availibletimes,setavailibletimes}) {
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -13,12 +14,9 @@ function BookingForm({availibletimes,setavailibletimes}) {
         date:''
     }
     })
-    
   const onSubmit = (data) => {
        var times = [...availibletimes];
        var target = times.find(t => {return t.time === data.time});
-       console.log(data);
-       console.log(target);
        target.state = "Booked"
       setavailibletimes(times);
   }
@@ -53,51 +51,53 @@ function BookingForm({availibletimes,setavailibletimes}) {
       </div>
       <div className="bookingform_option">
           <img src={Adults} className='bookingform_option-img'/>
-          <input className='bookingform_option-input'  type='number' placeholder='Guests'
-          {...register("adults")}/>
+          <div>
+              <input className='bookingform_option-input'  type='number' placeholder='Guests'
+              {...register("adults",{required:'this field is required',min:1,max:2})} min={1}/>
+              {errors.adults && <p style={{color:'red'}}>{errors.adults.message}</p>}
+          </div>
         </div>
         <div className="bookingform_option">
           <img src={Clock}className='bookingform_option-img'/>
-          <select id="res-time " className='bookingform_option-select' {...register("time")}>
-               <option selected>Select Time</option>
+          <select id="res-time" className='bookingform_option-select' {...register("time",{required:true})}>
             {availibletimes.map((time,index) => {
               if(time.state === 'Availible') {
                 return <option key={index} value={time.time}>{time.time}</option>
-              }     
+              }
             })}
           </select>
         </div>
         <div className="bookingform_option">
           <img src={Date}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='date' placeholder='Date'
-            {...register('date',{required:true})}/>
+            {...register('date',{required:true,min:Date.now})}/>
         </div>
         <div className="bookingform_option">
           <img src={Date}className='bookingform_option-img'/>
-          <select id="occasion" className='bookingform_option-select'>
-          <option>Select Occasion</option>
-      <option>Birthday</option>
-      <option>Anniversary</option>
-   </select>
+          <select id="occasion" className='bookingform_option-select' {...register('occasion',{required:true})}>
+              <option>Select Occasion</option>
+              <option>Birthday</option>
+              <option>Anniversary</option>
+          </select>
         </div>
         <div className="bookingform_option">
           <img src={Customer}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='text' placeholder='Your Name'
-              {...register('customer')}/>
+              {...register('customer',{required:true,min:2,max:200})}/>
         </div>
         <div className="bookingform_option">
           <img src={Phone}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='phone' placeholder='Phone'
-          {...register('phone')}/>
+          {...register('phone',{required:true,pattern:'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'})}/>
         </div>
         <div className="bookingform_option">
           <img src={Mail}className='bookingform_option-img'/>
           <input className='bookingform_option-input' type='email' placeholder='Email'
-            {...register('email')}/>
+            {...register('email',{required:true,pattern:'[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+'})}/>
         </div>
         <div className="bookingform_footer">
-        <button className='primaryButton' type='submit'>Reserve Table</button>
-        <button className='secondaryButton' type='button'>Cancel</button>
+          <button className='primaryButton' type='submit'>Reserve Table</button>
+          <button className='secondaryButton' type='button'>Cancel</button>
         </div>
         </form>
     </div>

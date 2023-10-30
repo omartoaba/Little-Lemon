@@ -31,7 +31,7 @@ p {
 :root {
   --primary-color: #f3cd21;
   --seconday-color: #4b5e57;
-  --header-font: "Markazi Text", sans-serif;
+  --header-font: "Manrope", sans-serif;
 }
 .primaryButton {
   background-color: var(--primary-color);

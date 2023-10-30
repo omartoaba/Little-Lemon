@@ -21,7 +21,7 @@ function BookingSlot({availibletimes}) {
                return (
                 <tr>
                   <td key={index}>{data.time}</td>
-                  <td key={index*3}>{data.state}</td>
+                  <td key={index+100}>{data.state}</td>
                 </tr>
                )
             })}

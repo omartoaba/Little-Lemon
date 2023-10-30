@@ -79,10 +79,16 @@ hr {
 }
 .bookingform_option {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   margin: 10px 0;
   width: 100%;
+}
+.bookingform_option p {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 .bookingform_option-img {
   width: 40px;
