@@ -23,7 +23,7 @@ function CAT() {
     <Flex align={'center'}>
       <Heading>Week Specials</Heading>
       <Spacer />
-      <Button colorScheme='yellow'>Order Online</Button>
+      <Button colorScheme='yellow' size='lg'>Order Online</Button>
     </Flex>  
     <Wrap align='start' justifyContent={'start'} alignItems={'start'}>{
         specials.map((data,index) => {

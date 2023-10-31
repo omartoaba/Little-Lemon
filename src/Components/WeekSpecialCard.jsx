@@ -1,7 +1,7 @@
 import React from 'react'
 import './weekSpecialCard.css'
-import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button,ButtonGroup, HStack, Icon } from '@chakra-ui/react'
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStack, Icon,Tooltip } from '@chakra-ui/react'
+import { MdDeliveryDining } from "react-icons/md";
 function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
   return (
     <Card maxW='sm' background={'#ECEEED'}>
@@ -12,23 +12,24 @@ function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
       borderRadius='lg' width={400} height={250}
     />
     <Stack mt='6' spacing='3'>
-        <HStack justify={'space-between'}>
-            <Heading size='md' >
+        <HStack justify={'space-between'} align={'center'}>
+            <Heading size='md'>
                 {Title}
             </Heading>
-            <Text color='blue.600' fontSize='2xl'>
+            <Text color='orange.600' fontSize='xl'>
                 {Price}
             </Text>
         </HStack>
-      <Text>
-        {Description}
-      </Text>
+        <Tooltip hasArrow label={Description}>
+             <Text fontSize={16} noOfLines={3}>
+                {Description}
+            </Text>
+        </Tooltip>
     </Stack>
   </CardBody>
-  <Divider />
   <CardFooter>
-      <Button variant='solid' colorScheme='blue' rightIcon={<Icon as={MdOutlineShoppingCart}/>}>
-        Order Online
+      <Button variant='ghost' colorScheme='gray' rightIcon={<Icon as={MdDeliveryDining}/>} alignItems={'center'}>
+        Order a delivery
       </Button>
   </CardFooter>
 </Card>
