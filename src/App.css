@@ -67,3 +67,6 @@ p {
   box-shadow: rgba(243, 205, 33, 0.12) 0px 2px 4px 0px,
     rgba(243, 205, 33, 0.32) 0px 2px 16px 0px;
 }
+html {
+  scroll-behavior: smooth;
+}

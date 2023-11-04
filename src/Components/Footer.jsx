@@ -6,7 +6,7 @@ import {MdHome,MdInfo,MdRestaurantMenu,MdTableRestaurant,MdRestaurant,MdFacebook
 import {BiLogoInstagramAlt} from 'react-icons/bi'
 function Footer() {
   return (
-    <Stack spacing={0}>
+    <Stack spacing={0} id='about'>
         <HStack background={'var(--primary-color)'} padding={10} align={'start'} > 
             <Stack>
                 <Heading size={'lg'}>
@@ -36,17 +36,10 @@ function Footer() {
                                      Home
                                 </Button>
                             </a>
-                        </ListItem>
-                        <ListItem color={'white'}>
-                            <a href='about'>
-                                 <Button background={'transparent'} leftIcon={<Icon as={MdInfo} size={20}/>} alignItems={'center'} color={'white'}>
-                                     About
-                                </Button>
-                            </a>
-                        </ListItem>
+                        </ListItem>  
                         <ListItem color={'white'}>
                              <a href='menu'>
-                                 <Button background={'transparent'} leftIcon={<Icon as={MdRestaurantMenu} size={20}/>} alignItems={'center'} color={'white'}>
+                                 <Button   background={'transparent'} leftIcon={<Icon as={MdRestaurantMenu} size={20}/>} alignItems={'center'} color={'white'}>
                                      Menu
                                 </Button>
                             </a>

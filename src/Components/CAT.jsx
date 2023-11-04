@@ -2,6 +2,7 @@ import { Button, Flex, HStack, Heading, Stack, Wrap, WrapItem,Spacer } from '@ch
 import React from 'react'
 import WeekSpecialCard from './WeekSpecialCard';
 import { GreekSalad,Brushetta,LemonDessert } from './imagesimports';
+import Testimonials from './Testimonials';
 const specials = [{
   image:{GreekSalad},
   title:'Greek Salad',
@@ -19,13 +20,13 @@ const specials = [{
 
 function CAT() {
   return (
-    <Stack spacing={20}>
+    <Stack spacing={20} padding={20} justifyContent={'center'}>
     <Flex align={'center'}>
       <Heading>Week Specials</Heading>
       <Spacer />
       <Button colorScheme='yellow' size='lg'>Order Online</Button>
-    </Flex>  
-    <Wrap align='start' justifyContent={'start'} alignItems={'start'}>{
+    </Flex>
+    <Wrap justify='center'>{
         specials.map((data,index) => {
           return(
           <WrapItem key={index} justifySelf={'self-start'}>
@@ -34,6 +35,7 @@ function CAT() {
       })
     }
     </Wrap>
+    <Testimonials/>
     </Stack>
   )
 }

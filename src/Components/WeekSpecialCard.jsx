@@ -4,7 +4,7 @@ import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStac
 import { MdDeliveryDining } from "react-icons/md";
 function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
   return (
-    <Card maxW='sm' background={'#ECEEED'}>
+    <Card maxW='sm' background={'#ECEEED'} shadow={'md'}>
   <CardBody>
     <Image
       src={SpecialImage}

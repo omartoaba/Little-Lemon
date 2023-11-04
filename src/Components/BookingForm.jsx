@@ -1,12 +1,12 @@
 import React from 'react'
 import {Inside,Outside,Adults,Children,Clock,Date,Customer,Mail,Phone} from './imagesimports'
-import { useForm } from "react-hook-form";
 import './BookingForm.css'
 import { useState } from 'react'
 import { redirect } from 'react-router-dom';
 
 function BookingForm({availibletimes,setavailibletimes}) {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+  return <div>form</div>
+   /* const { register, handleSubmit, formState: { errors } } = useForm({
       defaultValues: { adults: '',
         time: '',
         phone: '',
@@ -100,8 +100,8 @@ function BookingForm({availibletimes,setavailibletimes}) {
           <button className='secondaryButton' type='button'>Cancel</button>
         </div>
         </form>
-    </div>
-  )
+    </div> 
+  ) */
 }
 
 export default BookingForm

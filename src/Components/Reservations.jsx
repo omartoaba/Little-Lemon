@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Reservations.css'
-import BookingForm from './BookingForm.jsx'
 import BookingSlot from './BookingSlot';
+import BookingTableForm from './BookingTableForm';
 
 
 function Reservations() {
@@ -20,7 +20,7 @@ function Reservations() {
  return (
     <div className="reservations-container">
       <BookingSlot availibletimes={availibletimes}/>
-      <BookingForm availibletimes={availibletimes} setavailibletimes={setavailibletimes}/>
+      <BookingTableForm/>
     </div>
   )
 }

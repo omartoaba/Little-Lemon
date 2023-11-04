@@ -1,15 +1,15 @@
 import React from 'react'
 import Nav from './Nav'
-import { Stack } from '@chakra-ui/react'
+import { Stack,Box } from '@chakra-ui/react'
 import Footer from './Footer'
 
 function Container(props) {
   return (
-     <Stack spacing={5}>
+     <Stack spacing={5} mt={5}>
      <Nav/>
-     <div className="container">
+     <Box mt={10}>
         {props.children}
-     </div>
+     </Box>
      <Footer/>
      </Stack>
   )
