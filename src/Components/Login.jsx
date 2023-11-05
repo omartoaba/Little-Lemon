@@ -1,12 +1,13 @@
 import {HStack, Stack, Text,Image, Heading,InputGroup,InputRightElement,Input,IconButton, Button, DarkMode, FormControl, FormErrorMessage } from '@chakra-ui/react'
 import {useState} from 'react'
+import { connect } from 'react-redux';
 import LoginImage from '../assets/login.jpg'
 import Logo from '../assets/Logo.svg'
-import {BiSolidShow} from 'react-icons/bi'
-import {BiSolidHide} from 'react-icons/bi'
+import * as actions from '../actions/userActions';
+import {BiSolidShow,BiSolidHide} from 'react-icons/bi'
 import { Field, Form, Formik, useFormikContext } from 'formik'
 import { useNavigate } from 'react-router-dom'
-function Login() {
+function Login(props) {
   const values = useFormikContext();
   const navigate = useNavigate();
   const [show, setShow] = useState(false)
@@ -15,7 +16,8 @@ function Login() {
     if (!value)
      return  'this field is required';
   }
-  const onLoginSubmit = (data)=> {
+  const onLoginSubmit = (data)=> {;
+      props.login({username:data.username,password:data.password});
       navigate('/');
   }
   return (
@@ -74,4 +76,7 @@ function Login() {
   )
 }
 
-export default Login
+const mapActionsToProps = {
+  login : actions.login
+}
+export default connect(null,mapActionsToProps)(Login);

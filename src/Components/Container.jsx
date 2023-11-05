@@ -2,8 +2,10 @@ import React from 'react'
 import Nav from './Nav'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Stack,Box, HStack, Avatar,AvatarBadge, Spacer,Popover,PopoverTrigger,PopoverContent,PopoverHeader,Text,PopoverArrow,PopoverCloseButton,PopoverBody, Button, Divider } from '@chakra-ui/react'
+import * as actions from '../actions/userActions';
 import Footer from './Footer'
 import Login from './Login'
+import { connect } from 'react-redux'
 
 function Container(props) {
    const location = useLocation();
@@ -22,15 +24,15 @@ function Container(props) {
                   placement='bottom'
                   closeOnBlur={true}>
                   <PopoverTrigger>
-                     <Avatar cursor={'pointer'} name='Toaba Omar' size={'sm'} src='https://bit.ly/broken-link'>
+                     <Avatar cursor={'pointer'} name={props.username} size={'sm'} src='https://bit.ly/broken-link'>
                          <AvatarBadge boxSize='1em' bg='green.500' />
                      </Avatar>
                   </PopoverTrigger>
                   <PopoverContent>
                      <PopoverHeader pt={4} fontWeight='bold' border='0'>
                         <HStack>
-                           <Avatar name='Toaba Omar' size={'sm'} src='https://bit.ly/broken-link'/>
-                           <Text fontSize={'md'}>Toaba Omar</Text>
+                           <Avatar name={props.username} size={'sm'} src='https://bit.ly/broken-link'/>
+                           <Text fontSize={'md'}>{props.username}</Text>
                         </HStack>
                      </PopoverHeader>
                      <PopoverArrow />
@@ -56,5 +58,11 @@ function Container(props) {
      </Stack>
   )
 }
-
-export default Container
+const mapStateToProps = state => ({
+   username:state.userReducer.username,
+   password:state.userReducer.password
+ })
+ const mapActionsToProps = {
+   logout : actions.logout
+ }
+export default connect(mapStateToProps,mapActionsToProps)(Container);

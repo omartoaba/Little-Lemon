@@ -5,9 +5,12 @@ import Reservations from './Components/Reservations';
 import Container from './Components/Container';
 import { ChakraProvider } from '@chakra-ui/react';
 import Login from './Components/Login';
+import { Provider } from 'react-redux';
+import { userStore } from './actions/userstore';
 function App() {
   return (
     <BrowserRouter>
+    <Provider store={userStore}>
     <ChakraProvider>
       <Container>
         <Routes>
@@ -17,6 +20,7 @@ function App() {
         </Routes>
       </Container>
     </ChakraProvider>
+    </Provider>
     </BrowserRouter>
   );
 }
