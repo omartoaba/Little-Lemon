@@ -1,16 +1,24 @@
 import React from 'react'
 import Nav from './Nav'
+import { useLocation } from 'react-router-dom'
 import { Stack,Box } from '@chakra-ui/react'
 import Footer from './Footer'
+import Login from './Login'
 
 function Container(props) {
+   const location = useLocation();
+   const isLoginPage = location.pathname === '/login';
   return (
-     <Stack spacing={5} mt={5}>
-     <Nav/>
-     <Box mt={10}>
-        {props.children}
-     </Box>
-     <Footer/>
+     <Stack spacing={5}>
+      {isLoginPage ? <Login/> :
+         <>
+          <Nav/>
+          <Box mt={10}>
+             {props.children}
+          </Box>
+          <Footer/>
+      </>
+      }
      </Stack>
   )
 }
