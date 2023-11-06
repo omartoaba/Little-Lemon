@@ -6,11 +6,11 @@ import Container from './Components/Container';
 import { ChakraProvider } from '@chakra-ui/react';
 import Login from './Components/Login';
 import { Provider } from 'react-redux';
-import { userStore } from './actions/userstore';
+import { store } from './actions/store';
 function App() {
   return (
     <BrowserRouter>
-    <Provider store={userStore}>
+    <Provider store={store}>
     <ChakraProvider>
       <Container>
         <Routes>
@@ -23,7 +23,6 @@ function App() {
     </Provider>
     </BrowserRouter>
   );
-}
+} 
 
 export default App;
- 

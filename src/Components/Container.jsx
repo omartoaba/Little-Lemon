@@ -1,12 +1,15 @@
-import React from 'react'
-import Nav from './Nav'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { Stack,Box, HStack, Avatar,AvatarBadge, Spacer,Popover,PopoverTrigger,PopoverContent,PopoverHeader,Text,PopoverArrow,PopoverCloseButton,PopoverBody, Button, Divider, DarkMode, IconButton } from '@chakra-ui/react'
+import React from 'react';
+import Nav from './Nav';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Stack,Box, HStack, Avatar,AvatarBadge, Spacer,Popover,PopoverTrigger,PopoverContent,PopoverHeader,Text,PopoverArrow,PopoverCloseButton,PopoverBody, Button,
+    Divider, PopoverFooter,TableContainer,Table,Thead,Tbody,Tr,Td,Th, IconButton } from '@chakra-ui/react'
 import * as actions from '../actions/userActions';
-import Footer from './Footer'
-import Login from './Login'
-import { connect } from 'react-redux'
-import {FaShoppingCart} from 'react-icons/fa'
+import * as cartActions from '../actions/cartActions';
+import Footer from './Footer';
+import Login from './Login';
+import { connect } from 'react-redux';
+import {FaShoppingCart} from 'react-icons/fa';
+import {MdDelete} from 'react-icons/md';
 
 function Container(props) {
    const location = useLocation();
@@ -26,24 +29,45 @@ function Container(props) {
                   closeOnBlur={true}>
                   <PopoverTrigger>
                      <Avatar cursor={'pointer'} size={'sm'} icon={<FaShoppingCart color='black' size={'18'}/>} bg={'#ECEEED'}>
-                        <AvatarBadge boxSize='1.8em' bg='red.500' alignItems={'center'} fontSize={'12'}>99</AvatarBadge>
+                        <AvatarBadge boxSize='1.8em' bg='red.500' alignItems={'center'} fontSize={'12'}>{props.products.length}</AvatarBadge>
                      </Avatar>
                   </PopoverTrigger>
                   <PopoverContent>
                      <PopoverHeader pt={4} fontWeight='bold' border='0'>
                         <HStack>
-                           <Text fontSize={'md'} fontWeight={'semibold'}>Total Cart Items: $120</Text>
+                           <Text fontSize={'md'} fontWeight={'semibold'}>Total Cart Items: ${props.products.map(p => p.price).reduce((p,n) => p+n,0).toFixed(2)}</Text>
                         </HStack>
                      </PopoverHeader>
                      <PopoverArrow />
                      <PopoverCloseButton />
                      <PopoverBody>
-                           <Divider/>
-                           <HStack justify={'space-between'} spacing={5} my={'2'}>
-                              <Button colorScheme='green' variant={'solid'}>Pay Now</Button>
-                              <Button colorScheme='red' variant={'ghost'}>Clear Cart</Button>
-                           </HStack>
+                        {props.products.length > 0 ?
+                        <TableContainer maxHeight={'300px'} overflowY={'auto'} overflowX={'hidden'}>
+                            <Table variant='simple' size={'sm'}>
+                              <Thead bg={'transparent'}>
+                                 <Tr>
+                                    <Th bg={'transparent'} borderColor={'transparent'}>Dish</Th>
+                                    <Th bg={'transparent'} borderColor={'transparent'}>Count</Th>
+                                 </Tr>
+                              </Thead>
+                              <Tbody>
+                                 {props.products.map((product,index) => {
+                                    return <Tr key={index}>
+                                             <Td>{product.title}</Td>
+                                             <Td>{1}</Td>
+                                             <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red'/>}/></Td>
+                                          </Tr>
+                                 })}
+                              </Tbody>
+                           </Table>
+                        </TableContainer> : <Text fontSize={'12'}>your cart is empty.</Text>}
                      </PopoverBody>
+                     <PopoverFooter>
+                           <HStack justify={'space-between'} spacing={5}>
+                              <Button colorScheme='green' variant={'solid'}>Check out</Button>
+                              <Button colorScheme='red' variant={'outline'} onClick={() => props.clearCart()}>Clear Cart</Button>
+                           </HStack>
+                     </PopoverFooter>
                   </PopoverContent>
                   </Popover>
                   <Popover
@@ -86,9 +110,11 @@ function Container(props) {
 }
 const mapStateToProps = state => ({
    username:state.userReducer.username,
-   password:state.userReducer.password
+   password:state.userReducer.password,
+   products:state.cartReducer.products
  })
  const mapActionsToProps = {
-   logout : actions.logout
+   logout : actions.logout,
+   clearCart: cartActions.clearCart
  }
 export default connect(mapStateToProps,mapActionsToProps)(Container);

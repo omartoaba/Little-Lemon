@@ -2,7 +2,13 @@ import React from 'react'
 import './weekSpecialCard.css'
 import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStack, Icon,Tooltip,ButtonGroup } from '@chakra-ui/react'
 import { MdDeliveryDining } from "react-icons/md";
-function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
+import * as actions from '../actions/cartActions';
+import { connect } from 'react-redux';
+
+function WeekSpecialCard({SpecialImage,Title,Description,Price,...props}) {
+  const addToCart =() => {
+    props.addProduct({title:Title,price:Price})
+  }
   return (
     <Card maxW='sm' background={'#ECEEED'} shadow={'md'}>
   <CardBody>
@@ -17,7 +23,7 @@ function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
                 {Title}
             </Heading>
             <Text color='orange.600' fontSize='xl'>
-                {Price}
+                ${Price}
             </Text>
         </HStack>
         <Tooltip hasArrow label={Description}>
@@ -33,7 +39,7 @@ function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
       <Button variant='solid' colorScheme='yellow' rightIcon={<Icon as={MdDeliveryDining}/>} justifyContent={'center'}>
         Order a delivery
       </Button>
-      <Button variant='ghost' colorScheme='yellow'>
+      <Button variant='ghost' colorScheme='yellow' onClick={addToCart}>
         Add to cart
       </Button>
     </ButtonGroup>
@@ -41,5 +47,7 @@ function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
 </Card>
   )
 }
-
-export default WeekSpecialCard
+const mapActionsToProps = {
+  addProduct : actions.addProduct
+}
+export default connect(null,mapActionsToProps)(WeekSpecialCard);

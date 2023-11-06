@@ -6,17 +6,17 @@ import Testimonials from './Testimonials';
 const specials = [{
   image:GreekSalad,
   title:'Greek Salad',
-  price:'$12.99',
+  price:12.99,
   description:'The famous greek salad of crispy lettuce,peppers,olives,and our Chicago feta cheese. garnished with crunshy garlic and rosemary croutons.'
 },{
   image:Brushetta,
   title:'Brushetta',
-  price:'$5.99',
+  price:5.99,
   description:'Our Brushetta is made from grilled bread that has been smeared with garlic and seasoned with salt and olive oil.'
 },{
   image:LemonDessert,
   title:'Lemon Dessert',
-  price:'$5.00',
+  price:5.00,
   description:'This comes straight froma grandma"s recipe book. evert last ingredient has been sourced and is as authentic as can be imagined.'
 }];
 
