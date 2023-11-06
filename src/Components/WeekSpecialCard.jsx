@@ -1,6 +1,6 @@
 import React from 'react'
 import './weekSpecialCard.css'
-import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStack, Icon,Tooltip } from '@chakra-ui/react'
+import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStack, Icon,Tooltip,ButtonGroup } from '@chakra-ui/react'
 import { MdDeliveryDining } from "react-icons/md";
 function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
   return (
@@ -25,12 +25,18 @@ function WeekSpecialCard({SpecialImage,Title,Description,Price}) {
                 {Description}
             </Text>
         </Tooltip>
+        <Divider/>
     </Stack>
   </CardBody>
   <CardFooter>
-      <Button variant='ghost' colorScheme='gray' rightIcon={<Icon as={MdDeliveryDining}/>} alignItems={'center'}>
+      <ButtonGroup spacing='2'>
+      <Button variant='solid' colorScheme='yellow' rightIcon={<Icon as={MdDeliveryDining}/>} justifyContent={'center'}>
         Order a delivery
       </Button>
+      <Button variant='ghost' colorScheme='yellow'>
+        Add to cart
+      </Button>
+    </ButtonGroup>
   </CardFooter>
 </Card>
   )

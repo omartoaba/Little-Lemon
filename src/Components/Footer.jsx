@@ -1,4 +1,4 @@
-import { Stack, HStack, Spacer,Text,Heading,Image,List,ListItem,ListIcon,Button,Icon } from '@chakra-ui/react'
+import { Stack, HStack, Spacer,Text,Heading,Image,List,ListItem,ListIcon,Button,Icon, DarkMode } from '@chakra-ui/react'
 import React from 'react'
 import FooterBanner from '../assets/footerImg.jpg'
 import FooterLogo from '../assets/footerlogo.png'
@@ -29,6 +29,7 @@ function Footer() {
             <HStack justifyContent={'space-between'} width={'100%'} ml={20} mr={20} align={'start'}>
                 <Stack>
                     <Heading size={'md'}>Navigation</Heading>
+                    <DarkMode>
                     <List spacing={0}>
                         <ListItem color={'white'}>
                             <a href='/'>
@@ -59,6 +60,7 @@ function Footer() {
                             </a>
                         </ListItem>
                     </List>
+                    </DarkMode>
                 </Stack>
                 <Stack>
                     <Heading size={'md'}>Contact</Heading>
@@ -71,6 +73,7 @@ function Footer() {
                 </Stack>
                 <Stack>
                     <Heading size={'md'}>Connect</Heading>
+                    <DarkMode>
                     <List spacing={0}>
                         <ListItem color={'white'}>
                             <a href='https://www.facebook.com'>
@@ -94,6 +97,7 @@ function Footer() {
                             </a>
                         </ListItem>
                     </List>
+                    </DarkMode>
                 </Stack>
             </HStack>
         </HStack>
