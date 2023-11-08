@@ -9,12 +9,13 @@ import { Provider } from 'react-redux';
 import { store } from './actions/store';
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
     <Provider store={store}>
     <ChakraProvider>
       <Container>
         <Routes>
           <Route path="/login" element={<Login/>}></Route>
+          <Route path="/home" element={<Home/>}></Route>
           <Route path="/" element={<Home/>}></Route>
           <Route path="/reservations" element={<Reservations/>}></Route>
         </Routes>
