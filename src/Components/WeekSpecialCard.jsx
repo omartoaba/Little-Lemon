@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 function WeekSpecialCard({SpecialImage,Title,Description,Price,...props}) {
   const addToCart =() => {
-    props.addProduct({title:Title,price:Price})
+    props.addProduct({id:Math.floor((Math.random() * 1000) + 1),title:Title,price:Price})
   }
   return (
     <Card maxW='sm' background={'#ECEEED'} shadow={'md'}>

@@ -10,7 +10,7 @@ import {MdDelete} from 'react-icons/md';
 import * as actions from '../actions/userActions';
 import * as cartActions from '../actions/cartActions';
 
-function Nav(props) {   
+function Nav(props) {
   const navigate = useNavigate();
   return (
      <HStack padding='5px 15px' justify={'center'} bg={'white'} width={'100%'} spacing={5}>
@@ -59,7 +59,7 @@ function Nav(props) {
                           return <Tr key={index}>
                                    <Td>{product.title}</Td>
                                    <Td>{1}</Td>
-                                   <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red'/>}/></Td>
+                                   <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red' onClick={() => {props.removeProduct(product.id); console.log(product.id)}}/>}/></Td>
                                 </Tr>
                        })}
                     </Tbody>
@@ -107,6 +107,7 @@ const mapStateToProps = state => ({
 })
 const mapActionsToProps = {
   logout : actions.logout,
-  clearCart: cartActions.clearCart
+  clearCart: cartActions.clearCart,
+  removeProduct: cartActions.removeProduct
 }
 export default connect(mapStateToProps,mapActionsToProps)(Nav)
