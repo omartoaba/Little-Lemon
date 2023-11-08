@@ -33,13 +33,13 @@ function Nav(props) {
         closeOnBlur={true}>
         <PopoverTrigger>
            <Avatar cursor={'pointer'} size={'sm'} icon={<FaShoppingCart color='black' size={'18'}/>} bg={'#ECEEED'}>
-              <AvatarBadge boxSize='1.8em' bg='red.500' alignItems={'center'} fontSize={'12'}>{props.products.length}</AvatarBadge>
+              <AvatarBadge boxSize='1.8em' bg='red.500' alignItems={'center'} fontSize={'12'}>{props.products.reduce((c,p) => c+p.count,0)}</AvatarBadge>
            </Avatar>
         </PopoverTrigger>
         <PopoverContent>
            <PopoverHeader pt={4} fontWeight='bold' border='0'>
               <HStack>
-                 <Text fontSize={'md'} fontWeight={'semibold'}>Total Cart Items: ${props.products.map(p => p.price).reduce((p,n) => p+n,0).toFixed(2)}</Text>
+                 <Text fontSize={'md'} fontWeight={'semibold'}>Total Cart Items: ${props.products.reduce((p,n) => p+(n.price*n.count),0).toFixed(2)}</Text>
               </HStack>
            </PopoverHeader>
            <PopoverArrow />
@@ -58,8 +58,8 @@ function Nav(props) {
                        {props.products.map((product,index) => {
                           return <Tr key={index}>
                                    <Td>{product.title}</Td>
-                                   <Td>{1}</Td>
-                                   <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red' onClick={() => {props.removeProduct(product.id); console.log(product.id)}}/>}/></Td>
+                                   <Td>{product.count}</Td>
+                                   <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red' onClick={() => props.removeProduct(product.title)}/>}/></Td>
                                 </Tr>
                        })}
                     </Tbody>

@@ -9,10 +9,10 @@ export const addProduct = (product) => dispatch => {
         product:product
       })
 }
-export const removeProduct = (productId) => dispatch => {
+export const removeProduct = (productName) => dispatch => {
     dispatch({
         type:CARTACTION_TYPES.REMOVEPRODUCT,
-        productId:productId
+        productName:productName
       })
 }
 export const clearCart = () => dispatch => {
