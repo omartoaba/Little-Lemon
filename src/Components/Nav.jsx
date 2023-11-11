@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../assets/Logo.svg'
 import './Nav.css'
 import { HStack, Avatar,AvatarBadge, Spacer,Popover,PopoverTrigger,PopoverContent,PopoverHeader,Text,PopoverArrow,PopoverCloseButton,PopoverBody, Button,
-  Divider, PopoverFooter,TableContainer,Table,Thead,Tbody,Tr,Td,Th, IconButton  } from '@chakra-ui/react'
+  Divider, PopoverFooter,TableContainer,Table,Thead,Tbody,Tr,Td,Th, IconButton, useToast  } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {FaShoppingCart} from 'react-icons/fa';
@@ -12,6 +12,7 @@ import * as cartActions from '../actions/cartActions';
 
 function Nav(props) {
   const navigate = useNavigate();
+  const toast = useToast();
   return (
      <HStack padding='5px 15px' justify={'center'} bg={'white'} width={'100%'} spacing={5}>
      <Spacer/>
@@ -59,7 +60,7 @@ function Nav(props) {
                           return <Tr key={index}>
                                    <Td>{product.title}</Td>
                                    <Td>{product.count}</Td>
-                                   <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red' onClick={() => props.removeProduct(product.title)}/>}/></Td>
+                                   <Td><IconButton variant={'ghost'} icon={<MdDelete size={'20'} color='red'/>} onClick={() => props.removeProduct(product.title)}/></Td>
                                 </Tr>
                        })}
                     </Tbody>
@@ -68,7 +69,17 @@ function Nav(props) {
            </PopoverBody>
            <PopoverFooter>
                  <HStack justify={'space-between'} spacing={5}>
-                    <Button colorScheme='green' variant={'solid'}>Check out</Button>
+                    <Button colorScheme='green' variant={'solid'} onClick={() => {if(props.products.length <1) toast({
+                                                                                    title: 'your cart is empty',
+                                                                                    variant: 'left-accent',
+                                                                                    status:'error',
+                                                                                    isClosable: true,
+                                                                                    duration:3000,
+                                                                                    position:'top-left',
+                                                                                    containerStyle:{
+                                                                                    marginTop:'80px'
+                                                                                    }
+                                                                                 })}}>Check out</Button>
                     <Button colorScheme='red' variant={'outline'} onClick={() => props.clearCart()}>Clear Cart</Button>
                  </HStack>
            </PopoverFooter>

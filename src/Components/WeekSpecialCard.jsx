@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './weekSpecialCard.css'
-import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStack, Icon,Tooltip,ButtonGroup } from '@chakra-ui/react'
+import { Card,CardBody,Image,Stack,Heading,Text,Divider,CardFooter,Button, HStack, Icon,Tooltip,ButtonGroup, useDisclosure } from '@chakra-ui/react'
 import { MdDeliveryDining } from "react-icons/md";
 import * as actions from '../actions/cartActions';
 import { connect } from 'react-redux';
-
+import DeliveryForm from './DeliveryForm'
 function WeekSpecialCard({SpecialImage,Title,Description,Price,...props}) {
+  const {isOpen, onOpen, onClose} = useDisclosure();
   const addToCart =() => {
-    props.addProduct({id:Math.floor((Math.random() * 1000) + 1),title:Title,price:Price})
+    props.addProduct({title:Title,price:Price})
   }
   return (
-    <Card maxW='sm' background={'#ECEEED'} shadow={'md'}>
+  <Card maxW='sm' background={'#ECEEED'} shadow={'md'}>
+  <DeliveryForm dish={{SpecialImage,Title,Description,Price}} isOpen={isOpen} onClose={onClose}/>
   <CardBody>
     <Image
       src={SpecialImage}
@@ -36,7 +38,7 @@ function WeekSpecialCard({SpecialImage,Title,Description,Price,...props}) {
   </CardBody>
   <CardFooter>
       <ButtonGroup spacing='2'>
-      <Button variant='solid' colorScheme='yellow' rightIcon={<Icon as={MdDeliveryDining}/>} justifyContent={'center'}>
+      <Button variant='solid' colorScheme='yellow' rightIcon={<Icon as={MdDeliveryDining}/>} onClick={onOpen} justifyContent={'center'}>
         Order a delivery
       </Button>
       <Button variant='ghost' colorScheme='yellow' onClick={addToCart}>

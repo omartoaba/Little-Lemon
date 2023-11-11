@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Reservations.css'
 import BookingSlot from './BookingSlot';
 import BookingTableForm from './BookingTableForm';
+import { Stack } from '@chakra-ui/react';
 
 
 function Reservations() {
@@ -18,10 +19,10 @@ function Reservations() {
  // },[]);
  
  return (
-    <div className="reservations-container">
-      <BookingSlot availibletimes={availibletimes}/>
-      <BookingTableForm/>
-    </div>
+
+  <Stack mt={'60px'} padding={10}>
+    <BookingTableForm/>
+  </Stack>
   )
 }
 
