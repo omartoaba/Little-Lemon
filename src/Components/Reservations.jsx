@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './Reservations.css'
-import BookingSlot from './BookingSlot';
 import BookingTableForm from './BookingTableForm';
 import { Stack } from '@chakra-ui/react';
 

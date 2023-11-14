@@ -1,12 +1,13 @@
 import { FormControl, FormLabel, NumberDecrementStepper, NumberInputField,NumberIncrementStepper,Select,NumberInputStepper,
   NumberInput, Stack, Grid, GridItem, InputGroup, InputLeftAddon, InputLeftElement, Icon, Input, Modal, ModalOverlay,
-   ModalContent, ModalHeader, ModalCloseButton, ModalFooter, ModalBody, Button, useToast } from '@chakra-ui/react'
+   ModalContent, ModalHeader, ModalCloseButton, ModalFooter, ModalBody, Button, useToast, Text, HStack, Spacer, Box, Flex } from '@chakra-ui/react'
 import { Formik,Form,Field } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import {BsFillTelephoneFill,BsFillPersonFill,BsFillPeopleFill} from 'react-icons/bs'
 import {MdEmail} from "react-icons/md"
 function BookingTableForm({isOpen,onClose}) {
   const toast = useToast();
+  const [tableSelection,setTableSelection] = useState(true);
   return (
     <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={'3xl'}>
     <ModalOverlay />
@@ -18,6 +19,7 @@ function BookingTableForm({isOpen,onClose}) {
         {(props) => (
             <Form >
                <Stack>
+                {tableSelection ?
                 <Grid templateRows={'repeat(4,1fr)'} templateColumns={'repeat(2,1fr)'} gap={5}>
                   <GridItem>
                     <FormControl>
@@ -80,34 +82,34 @@ function BookingTableForm({isOpen,onClose}) {
                 </Field>
                   </GridItem>
                 </Grid>
+                : <Stack spacing={5}>
+                    <Flex width={'100%'}>
+                      <Input type='datetime-local'/>
+                      <Spacer/>
+                      <InputGroup>
+                        <NumberInput max={10} min={2} step={2} defaultValue={2}>
+                        <InputLeftElement pointerEvents='none'>
+                        <Icon as={BsFillPeopleFill} color='gray.100' />
+                      </InputLeftElement>
+                            <NumberInputField pl={10} readOnly={true}/>
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                        </NumberInput>
+                        </InputGroup>
+                    </Flex>
+                    <Box bg={'gray.400'} borderRadius={10} width={'100%'} height={250}>
+                      
+                    </Box>
+                  </Stack>}
                </Stack>
-                <Field name='time'>
-                    {
-                        ({field,form}) => (
-                            <FormControl isInvalid={form.errors.time && form.touched.time}>
-                            <FormLabel>Country</FormLabel>
-                            <Select {...field} placeholder='Select country'>
-                              <option>United Arab Emirates</option>
-                              <option>Nigeria</option>
-                            </Select>
-                          </FormControl>
-                        )
-                    }
-                </Field>
             </Form>
         )}
     </Formik>
     </ModalBody>
             <ModalFooter>
-              <Button colorScheme='yellow' mr={3}  onClick={() => {onClose(); toast({
-                title: 'your order is on its way',
-                variant: 'left-accent',
-                status:'success',
-                isClosable: true,
-                containerStyle:{
-                    marginTop:'80px'
-                }
-                })}}>
+              <Button colorScheme='yellow' mr={3}  onClick={() =>setTableSelection(false)}>
                 Reserve now
               </Button>
               <Button onClick={onClose}>Cancel</Button>

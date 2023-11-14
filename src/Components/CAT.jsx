@@ -1,7 +1,7 @@
 import { Button, Flex, HStack, Heading, Stack, Wrap, WrapItem,Spacer } from '@chakra-ui/react';
 import React from 'react'
 import WeekSpecialCard from './WeekSpecialCard';
-import { GreekSalad,Brushetta,LemonDessert } from './imagesimports';
+import { GreekSalad,Brushetta,LemonDessert } from '../assets/WeekSpecialImagesImport.js';
 import Testimonials from './Testimonials';
 const specials = [{
   image:GreekSalad,
