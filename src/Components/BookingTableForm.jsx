@@ -1,15 +1,24 @@
 import { FormControl, FormLabel, NumberDecrementStepper, NumberInputField,NumberIncrementStepper,Select,NumberInputStepper,
   NumberInput, Stack, Grid, GridItem, InputGroup, InputLeftAddon, InputLeftElement, Icon, Input, Modal, ModalOverlay,
-   ModalContent, ModalHeader, ModalCloseButton, ModalFooter, ModalBody, Button, useToast, Text, HStack, Spacer, Box, Flex } from '@chakra-ui/react'
+   ModalContent, ModalHeader, ModalCloseButton, ModalFooter, ModalBody, Button, useToast, Text, HStack, Spacer, Box, Flex, Wrap, Image, WrapItem } from '@chakra-ui/react'
 import { Formik,Form,Field } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {BsFillTelephoneFill,BsFillPersonFill,BsFillPeopleFill} from 'react-icons/bs'
 import {MdEmail} from "react-icons/md"
+import {getRandomTableDate,getWorkTimes} from '../assets/tablesdata'
+
+const workHours = getWorkTimes('10:00 am','10:00 pm');
+let tablesData = null;
 function BookingTableForm({isOpen,onClose}) {
   const toast = useToast();
+  const [guestsNumber,setGuestesNumber] = useState(2);
   const [tableSelection,setTableSelection] = useState(true);
+  const [selectedTime,setSelectedTime] = useState();
+  useEffect(() => {
+     tablesData = getRandomTableDate();
+  },[selectedTime])
   return (
-    <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={'3xl'}>
+    <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={'4xl'}>
     <ModalOverlay />
     <ModalContent>
       <ModalHeader>Reserve a Table</ModalHeader>
@@ -83,24 +92,35 @@ function BookingTableForm({isOpen,onClose}) {
                   </GridItem>
                 </Grid>
                 : <Stack spacing={5}>
-                    <Flex width={'100%'}>
-                      <Input type='datetime-local'/>
-                      <Spacer/>
+                    <HStack width={'100%'} spacing={8} justify={'space-between'}>
+                      <Input type='date'/>
+                      <Select value={selectedTime} placeholder='Select Time' onChange={(e) => setSelectedTime(e.target.value)}>
+                        {workHours.map((hour,index) => {
+                            return  <option key={index} value={hour}>{hour}</option>
+                        })}
+                      </Select>
                       <InputGroup>
-                        <NumberInput max={10} min={2} step={2} defaultValue={2}>
+                        <NumberInput value={guestsNumber} max={10} min={2} step={2} defaultValue={2} onChange={(e) => setGuestesNumber(e)}>
                         <InputLeftElement pointerEvents='none'>
                         <Icon as={BsFillPeopleFill} color='gray.100' />
                       </InputLeftElement>
-                            <NumberInputField pl={10} readOnly={true}/>
+                            <NumberInputField value={guestsNumber} pl={10} readOnly={true} />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
                                     <NumberDecrementStepper />
                                 </NumberInputStepper>
                         </NumberInput>
                         </InputGroup>
-                    </Flex>
-                    <Box bg={'gray.400'} borderRadius={10} width={'100%'} height={250}>
-                      
+                    </HStack>
+                    <Box padding={3} bg={'#DEDEDE'} borderRadius={10} width={'100%'} minHeight={250}>
+                      <Wrap justify={'center'} spacing={3}>
+                        {
+                        tablesData.get(`${guestsNumber}`).map((data,index) => {
+                          return (<WrapItem key={index} cursor={'pointer'} _hover={{opacity: 1.0}} opacity={0.6}>
+                                  <Image src={data} width={40} height={'auto'} />
+                                 </WrapItem>)
+                        })}
+                      </Wrap>
                     </Box>
                   </Stack>}
                </Stack>

@@ -32,3 +32,8 @@ export {
     Table10Booked,
     Table10Pending
 }
+export const TABLE_STATE = {
+    AVAILABLE : 'LOGIN',
+    BOOKED : 'LOGOUT',
+    PENDING:'PENDING'
+}
