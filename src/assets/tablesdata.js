@@ -59,8 +59,7 @@ numbers.push(max)
     var bookedTables = Array.from({length:numbers[1]}).fill(tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.BOOKED).tablesImage)
     var pendingTables = Array.from({length:numbers[2]}).fill(tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.PENDING).tablesImage);
     var totaltables = availibleTables.concat(bookedTables,pendingTables);
-    console.log(totaltables);
-    return [...totaltables];
+    return totaltables;
 }
 function getRandomTableDate(){
     let tablesData =  new Map();
