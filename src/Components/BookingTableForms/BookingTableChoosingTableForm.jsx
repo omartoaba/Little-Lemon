@@ -23,32 +23,51 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { getRandomTableDate, getWorkTimes } from "../../assets/tablesdata";
-import { BsFillPeopleFill } from "react-icons/bs";
+import { FaChair } from "react-icons/fa";
 import { Field } from "formik";
+import { TABLE_STATE } from "../../assets/tablesImages";
 
 const workHours = getWorkTimes("10:00 am", "10:00 pm");
 let tablesData = getRandomTableDate();
+const validateDate = (value) => {
+  var today = new Date();
+  // var selectedDate = new Date(value);
+  console.log(today);
+  console.log(selectedDate);
+  console.log(today > selectedDate);
+  if (today.getTime() < selectedDate.getTime())
+    return "the Reservation date must be starting from today";
+};
 function BookingTableChoosingTableForm() {
-  const [guestsNumber, setGuestesNumber] = useState(2);
+  const [chairsNumber, setChairsNumber] = useState(2);
   const [selectedTime, setSelectedTime] = useState();
+  const [selectedDate, setSelectedDate] = useState("11/20/2023");
   const table = useRef();
   useEffect(() => {
     tablesData = getRandomTableDate();
-  }, [selectedTime]);
+  }, [selectedTime, selectedDate]);
   return (
     <Stack spacing={5}>
       <HStack width={"100%"} spacing={8} justify={"space-between"}>
-        <Field name="reservationDate">
+        <Field name="reservationDate" validate={validateDate}>
           {({ form, field }) => {
             return (
               <FormControl
-                mb={6}
                 isInvalid={
                   form.errors.reservationDate && form.touched.reservationDate
                 }
               >
                 <FormLabel>Reservation Date</FormLabel>
-                <Input type="date" {...field} />
+                <Input
+                  type="date"
+                  {...field}
+                  value={selectedDate}
+                  onChange={(date) =>
+                    setSelectedDate(
+                      date.target.valueAsDate.toISOString().split("T")[0]
+                    )
+                  }
+                />
                 <FormErrorMessage>
                   {form.errors.reservationDate}
                 </FormErrorMessage>
@@ -60,7 +79,6 @@ function BookingTableChoosingTableForm() {
           {({ form, field }) => {
             return (
               <FormControl
-                mb={6}
                 isInvalid={
                   form.errors.reservationTime && form.touched.reservationTime
                 }
@@ -70,6 +88,7 @@ function BookingTableChoosingTableForm() {
                   {...field}
                   value={selectedTime}
                   placeholder="Select Time"
+                  defaultValue={""}
                   onChange={(e) => setSelectedTime(e.target.value)}
                 >
                   {workHours.map((hour, index) => {
@@ -87,41 +106,35 @@ function BookingTableChoosingTableForm() {
             );
           }}
         </Field>
-        <Field name="charisNumber">
+        <Field name="chairsNumber">
           {({ form, field }) => {
             return (
               <FormControl
-                mb={6}
                 isInvalid={
-                  form.errors.charisNumber && form.touched.charisNumber
+                  form.errors.chairsNumber && form.touched.chairsNumber
                 }
               >
                 <FormLabel>Chairs Number</FormLabel>
                 <InputGroup>
                   <NumberInput
-                    value={guestsNumber}
+                    value={chairsNumber}
                     max={10}
                     min={2}
-                    step={2}
-                    {...field}
                     defaultValue={2}
-                    onChange={(e) => setGuestesNumber(e)}
+                    step={2}
+                    onChange={(e) => setChairsNumber(e)}
                   >
                     <InputLeftElement pointerEvents="none">
-                      <Icon as={BsFillPeopleFill} color="gray.100" />
+                      <Icon as={FaChair} color="gray.400" />
                     </InputLeftElement>
-                    <NumberInputField
-                      value={guestsNumber}
-                      pl={10}
-                      readOnly={true}
-                    />
+                    <NumberInputField pl={10} isReadOnly={true} />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
                       <NumberDecrementStepper />
                     </NumberInputStepper>
                   </NumberInput>
                 </InputGroup>
-                <FormErrorMessage>{form.errors.charisNumber}</FormErrorMessage>
+                <FormErrorMessage>{form.errors.chairsNumber}</FormErrorMessage>
               </FormControl>
             );
           }}
@@ -133,25 +146,51 @@ function BookingTableChoosingTableForm() {
         borderRadius={10}
         width={"100%"}
         minHeight={250}
+        mt={6}
       >
         <Wrap justify={"center"} spacing={3}>
-          {tablesData.get(`${guestsNumber}`).map((data, index) => {
-            return (
-              <WrapItem
-                key={index}
-                cursor={"pointer"}
-                _hover={{ opacity: 1.0 }}
-                opacity={0.6}
-              >
-                <Portal containerRef={table}>
-                  <Text fontSize={30} color={"black"}>
-                    100000
-                  </Text>
-                </Portal>
-                <Image ref={table} src={data} width={40} height={"auto"} />
-              </WrapItem>
-            );
-          })}
+          {tablesData.has(`${chairsNumber}`) ? (
+            tablesData.get(`${chairsNumber}`).map((data, index) => {
+              return (
+                <WrapItem
+                  key={index}
+                  cursor={
+                    data.state === TABLE_STATE.AVAILABLE ? "pointer" : "no-drop"
+                  }
+                  _hover={{
+                    opacity: data.state === TABLE_STATE.AVAILABLE ? 1.0 : 0.6,
+                  }}
+                  opacity={0.6}
+                >
+                  <Box position={"relative"}>
+                    <Image
+                      ref={table}
+                      src={data.table}
+                      width={40}
+                      height={"auto"}
+                    />
+                    <Text
+                      position={"absolute"}
+                      top={"50%"}
+                      left={"50%"}
+                      transform="translate(-50%, -50%)"
+                      zIndex="2"
+                      opacity={1}
+                      color={"white"}
+                      fontWeight={900}
+                    >
+                      {index + 1}
+                    </Text>
+                  </Box>
+                </WrapItem>
+              );
+            })
+          ) : (
+            <Text fontWeight={600}>
+              Oops! Looks like we don't have a table for the number of chairs
+              you entered.
+            </Text>
+          )}
         </Wrap>
       </Box>
     </Stack>

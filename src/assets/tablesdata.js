@@ -55,9 +55,9 @@ for (let i = 0; i < 2; i++) {
     numbers.push(randomNumber < 0 ? 0 : randomNumber)
 }
 numbers.push(max)
-    var availibleTables = Array.from({length:numbers[0]}).fill(tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.AVAILABLE).tablesImage);
-    var bookedTables = Array.from({length:numbers[1]}).fill(tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.BOOKED).tablesImage)
-    var pendingTables = Array.from({length:numbers[2]}).fill(tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.PENDING).tablesImage);
+    var availibleTables = Array.from({length:numbers[0]}).fill({state:TABLE_STATE.AVAILABLE ,table:tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.AVAILABLE).tablesImage});
+    var bookedTables = Array.from({length:numbers[1]}).fill({state:TABLE_STATE.BOOKED,table:tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.BOOKED).tablesImage})
+    var pendingTables = Array.from({length:numbers[2]}).fill({state:TABLE_STATE.PENDING,table:tables.find((table) => table.chairsCount === tableguestNum && table.state === TABLE_STATE.PENDING).tablesImage});
     var totaltables = availibleTables.concat(bookedTables,pendingTables);
     return totaltables;
 }

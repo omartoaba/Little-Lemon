@@ -16,15 +16,7 @@ import BookingTableInfoForm from "./BookingTableInfoForm";
 import BookingTableChoosingTableForm from "./BookingTableChoosingTableForm";
 import * as Yup from "yup";
 
-const validateSchema = Yup.object().shape({
-  reservationDate: Yup.date()
-    .min(new Date(), "the date should starting from today")
-    .required("The Reservation Date is Required"),
-  chairsNumber: Yup.number()
-    .min(2)
-    .max(10)
-    .required("the Chairs Number is Required"),
-});
+const validateSchema = Yup.object().shape({});
 
 function BookingTableForm({ isOpen, onClose }) {
   const toast = useToast();
@@ -45,6 +37,7 @@ function BookingTableForm({ isOpen, onClose }) {
             initialValues={{
               reservationDate: new Date(),
               reservationTime: "14:00",
+              chairsNumber: 2,
             }}
             validationSchema={validateSchema}
           >
@@ -67,6 +60,9 @@ function BookingTableForm({ isOpen, onClose }) {
             mr={3}
             onClick={() => {
               if (!tableSelection) {
+                console.log("validation result");
+                validateSchema.validateSync();
+                // console.log(result);
                 setTableSelection(true);
               }
             }}
