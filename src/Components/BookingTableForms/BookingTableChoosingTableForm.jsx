@@ -41,7 +41,18 @@ const validateDate = (value) => {
 function BookingTableChoosingTableForm() {
   const [chairsNumber, setChairsNumber] = useState(2);
   const [selectedTime, setSelectedTime] = useState();
-  const [selectedDate, setSelectedDate] = useState("11/20/2023");
+  const [selectedDate, setSelectedDate] = useState();
+  const [selectedTableIndex, setSelectedTableIndex] = useState();
+  const selectedStyle = {
+    opacity: 1.0,
+    transform: "scale(1.1)",
+    transition: "opacity 0.3s, transform 0.3s",
+  };
+  const unselectedStyle = {
+    opacity: 0.6,
+    transform: "scale(1)",
+    transition: "opacity 0.3s, transform 0.3s",
+  };
   const table = useRef();
   useEffect(() => {
     tablesData = getRandomTableDate();
@@ -122,7 +133,10 @@ function BookingTableChoosingTableForm() {
                     min={2}
                     defaultValue={2}
                     step={2}
-                    onChange={(e) => setChairsNumber(e)}
+                    onChange={(e) => {
+                      setChairsNumber(e);
+                      setSelectedTableIndex(-1);
+                    }}
                   >
                     <InputLeftElement pointerEvents="none">
                       <Icon as={FaChair} color="gray.400" />
@@ -148,12 +162,13 @@ function BookingTableChoosingTableForm() {
         minHeight={250}
         mt={6}
       >
-        <Wrap justify={"center"} spacing={3}>
+        <Wrap justify={"center"} spacing={4}>
           {tablesData.has(`${chairsNumber}`) ? (
             tablesData.get(`${chairsNumber}`).map((data, index) => {
               return (
                 <WrapItem
                   key={index}
+                  data-state={data.state}
                   cursor={
                     data.state === TABLE_STATE.AVAILABLE ? "pointer" : "no-drop"
                   }
@@ -161,13 +176,26 @@ function BookingTableChoosingTableForm() {
                     opacity: data.state === TABLE_STATE.AVAILABLE ? 1.0 : 0.6,
                   }}
                   opacity={0.6}
+                  onClick={(e) => {
+                    if (
+                      e.currentTarget.getAttribute("data-state") ===
+                      TABLE_STATE.AVAILABLE
+                    ) {
+                      setSelectedTableIndex(index);
+                    }
+                  }}
+                  style={
+                    selectedTableIndex === index
+                      ? selectedStyle
+                      : unselectedStyle
+                  }
                 >
                   <Box position={"relative"}>
                     <Image
                       ref={table}
                       src={data.table}
                       width={40}
-                      height={"auto"}
+                      height={40}
                     />
                     <Text
                       position={"absolute"}
