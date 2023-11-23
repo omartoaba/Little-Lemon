@@ -20,29 +20,44 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  VisuallyHiddenInput,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { getRandomTableDate, getWorkTimes } from "../../assets/tablesdata";
 import { FaChair } from "react-icons/fa";
-import { Field } from "formik";
+import { ErrorMessage, Field, useFormikContext } from "formik";
 import { TABLE_STATE } from "../../assets/tablesImages";
+import {
+  InputControl,
+  NumberInputControl,
+  SelectControl,
+} from "formik-chakra-ui";
 
 const workHours = getWorkTimes("10:00 am", "10:00 pm");
-let tablesData = getRandomTableDate();
+let tablesData = new Map();
 const validateDate = (value) => {
   var today = new Date();
-  // var selectedDate = new Date(value);
+  console.log(value);
+  var selectedDate = new Date(value);
   console.log(today);
   console.log(selectedDate);
   console.log(today > selectedDate);
-  if (today.getTime() < selectedDate.getTime())
+  if (today > selectedDate)
     return "the Reservation date must be starting from today";
 };
-function BookingTableChoosingTableForm() {
+
+function BookingTableChoosingTableForm({ errors, touched }) {
+  const formik = useFormikContext();
   const [chairsNumber, setChairsNumber] = useState(2);
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDate, setSelectedDate] = useState();
-  const [selectedTableIndex, setSelectedTableIndex] = useState();
+  const [selectedTableIndex, setSelectedTableIndex] = useState(-1);
+  console.log("rerender occured");
+  const chairsNumberChanged = (e) => {
+    setChairsNumber(e);
+    setSelectedTableIndex(-1);
+    formik.setFieldValue("chairsNumber", e);
+  };
   const selectedStyle = {
     opacity: 1.0,
     transform: "scale(1.1)",
@@ -53,106 +68,60 @@ function BookingTableChoosingTableForm() {
     transform: "scale(1)",
     transition: "opacity 0.3s, transform 0.3s",
   };
-  const table = useRef();
   useEffect(() => {
     tablesData = getRandomTableDate();
   }, [selectedTime, selectedDate]);
   return (
     <Stack spacing={5}>
       <HStack width={"100%"} spacing={8} justify={"space-between"}>
-        <Field name="reservationDate" validate={validateDate}>
-          {({ form, field }) => {
-            return (
-              <FormControl
-                isInvalid={
-                  form.errors.reservationDate && form.touched.reservationDate
-                }
-              >
-                <FormLabel>Reservation Date</FormLabel>
-                <Input
-                  type="date"
-                  {...field}
-                  value={selectedDate}
-                  onChange={(date) =>
-                    setSelectedDate(
-                      date.target.valueAsDate.toISOString().split("T")[0]
-                    )
-                  }
-                />
-                <FormErrorMessage>
-                  {form.errors.reservationDate}
-                </FormErrorMessage>
-              </FormControl>
-            );
+        <FormControl
+          isInvalid={errors.reservationDate && touched.reservationDate}
+        >
+          <FormLabel>Reservation Date</FormLabel>
+          <Field
+            as={Input}
+            onChange={(e) => {
+              setSelectedDate(e.target.valueAsDate.toISOString().split("T")[0]);
+              formik.handleChange(e);
+            }}
+            value={selectedDate}
+            type="date"
+            id="reservationDate"
+            name="reservationDate"
+            validate={validateDate}
+          />
+          <FormErrorMessage>{errors.reservationDate}</FormErrorMessage>
+        </FormControl>
+        <SelectControl
+          value={selectedTime}
+          defaultValue={workHours[0]}
+          label="Reservarion Time"
+          name="reservationTime"
+          selectProps={{ placeholder: "Select Time" }}
+          onChange={(e) => {
+            setSelectedTime(e.target.value);
           }}
-        </Field>
-        <Field name="reservationTime">
-          {({ form, field }) => {
+        >
+          {workHours.map((hour, index) => {
             return (
-              <FormControl
-                isInvalid={
-                  form.errors.reservationTime && form.touched.reservationTime
-                }
-              >
-                <FormLabel>Reservation Time</FormLabel>
-                <Select
-                  {...field}
-                  value={selectedTime}
-                  placeholder="Select Time"
-                  defaultValue={""}
-                  onChange={(e) => setSelectedTime(e.target.value)}
-                >
-                  {workHours.map((hour, index) => {
-                    return (
-                      <option key={index} value={hour}>
-                        {hour}
-                      </option>
-                    );
-                  })}
-                </Select>
-                <FormErrorMessage>
-                  {form.errors.reservationTime}
-                </FormErrorMessage>
-              </FormControl>
+              <option key={index} value={hour}>
+                {hour}
+              </option>
             );
+          })}
+        </SelectControl>
+        <NumberInputControl
+          name="chairsNumber"
+          label="Chairs Number"
+          numberInputProps={{
+            value: chairsNumber,
+            onChange: chairsNumberChanged,
+            max: 10,
+            min: 2,
+            step: 2,
+            defaultValue: 2,
           }}
-        </Field>
-        <Field name="chairsNumber">
-          {({ form, field }) => {
-            return (
-              <FormControl
-                isInvalid={
-                  form.errors.chairsNumber && form.touched.chairsNumber
-                }
-              >
-                <FormLabel>Chairs Number</FormLabel>
-                <InputGroup>
-                  <NumberInput
-                    value={chairsNumber}
-                    max={10}
-                    min={2}
-                    defaultValue={2}
-                    step={2}
-                    onChange={(e) => {
-                      setChairsNumber(e);
-                      setSelectedTableIndex(-1);
-                    }}
-                  >
-                    <InputLeftElement pointerEvents="none">
-                      <Icon as={FaChair} color="gray.400" />
-                    </InputLeftElement>
-                    <NumberInputField pl={10} isReadOnly={true} />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </InputGroup>
-                <FormErrorMessage>{form.errors.chairsNumber}</FormErrorMessage>
-              </FormControl>
-            );
-          }}
-        </Field>
+        />
       </HStack>
       <Box
         padding={3}
@@ -161,6 +130,7 @@ function BookingTableChoosingTableForm() {
         width={"100%"}
         minHeight={250}
         mt={6}
+        mb={0}
       >
         <Wrap justify={"center"} spacing={4}>
           {tablesData.has(`${chairsNumber}`) ? (
@@ -182,6 +152,7 @@ function BookingTableChoosingTableForm() {
                       TABLE_STATE.AVAILABLE
                     ) {
                       setSelectedTableIndex(index);
+                      formik.setFieldValue("tableNumber", index + 1);
                     }
                   }}
                   style={
@@ -191,12 +162,7 @@ function BookingTableChoosingTableForm() {
                   }
                 >
                   <Box position={"relative"}>
-                    <Image
-                      ref={table}
-                      src={data.table}
-                      width={40}
-                      height={40}
-                    />
+                    <Image src={data.table} width={40} height={40} />
                     <Text
                       position={"absolute"}
                       top={"50%"}
@@ -221,6 +187,23 @@ function BookingTableChoosingTableForm() {
           )}
         </Wrap>
       </Box>
+      <Text
+        mt={-3}
+        fontSize={16}
+        color={selectedTableIndex > -1 ? "black" : "red"}
+      >
+        {selectedTableIndex > -1
+          ? `Selected table number is : ${
+              selectedTableIndex + 1
+            } with number of sets:
+        ${chairsNumber}`
+          : "No table was selected."}
+      </Text>
+      <InputControl
+        hidden
+        name="tableNumber"
+        inputProps={{ value: selectedTableIndex + 1 }}
+      />
     </Stack>
   );
 }

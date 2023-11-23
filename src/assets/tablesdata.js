@@ -63,6 +63,7 @@ numbers.push(max)
 }
 function getRandomTableDate(){
     let tablesData =  new Map();
+    console.log("tables were generated")
     tablesData.set('2',getRandomNumbers(12,2))
     tablesData.set('4',getRandomNumbers(10,4))
     tablesData.set('6',getRandomNumbers(8,6))
