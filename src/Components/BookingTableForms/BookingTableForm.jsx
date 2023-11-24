@@ -17,24 +17,62 @@ import BookingTableChoosingTableForm from "./BookingTableChoosingTableForm";
 import * as Yup from "yup";
 
 const validateSchema = Yup.object({
-  reservationTime: Yup.string().required(),
+  reservationTime: Yup.string().min(3).required(),
   chairsNumber: Yup.number().min(2).max(10).required(),
   tableNumber: Yup.number().min(1).max(12).required(),
+  userName: Yup.string().min(2).max(150).required("Name is Required"),
+  phoneNumber: Yup.number().required("Phone number is Required"),
+  emailAddress: Yup.string()
+    .email("Email must be a valid email")
+    .required("Email is Required"),
 });
 
-const SubmitButton = ({ tableSelection, setTableSelection }) => {
+const SubmitButton = ({ tableSelection, setTableSelection, toast, errors }) => {
   const formik = useFormikContext();
+  const haserrors =
+    formik.dirty &&
+    !(
+      errors.reservationDate &&
+      errors.reservationTime &&
+      errors.tableNumber &&
+      errors.chairsNumber
+    );
   return (
     <Button
       mr={3}
-      isDisabled={!formik.dirty && !formik.isValid}
+      isDisabled={!haserrors}
       colorScheme="yellow"
       onClick={() => {
         if (!tableSelection) {
           console.log(formik.values);
-          if (formik.dirty && formik.isValid) {
+          console.log(
+            formik.dirty,
+            errors.reservationDate,
+            errors.reservationTime,
+            errors.tableNumber,
+            errors.chairsNumber
+          );
+          if (
+            formik.dirty &&
+            !(
+              errors.reservationDate &&
+              errors.reservationTime &&
+              errors.tableNumber &&
+              errors.chairsNumber
+            )
+          ) {
             setTableSelection(true);
           } else {
+            toast({
+              title: "please resolve all errors before percedding",
+              variant: "left-accent",
+              status: "error",
+              position: "top",
+              isClosable: true,
+              containerStyle: {
+                marginTop: "20px",
+              },
+            });
           }
         }
       }}
@@ -77,7 +115,7 @@ function BookingTableForm({ isOpen, onClose }) {
               <ModalBody pb={6}>
                 <Stack>
                   {tableSelection ? (
-                    <BookingTableInfoForm />
+                    <BookingTableInfoForm errors={errors} touched={touched} />
                   ) : (
                     <BookingTableChoosingTableForm
                       errors={errors}
@@ -90,6 +128,8 @@ function BookingTableForm({ isOpen, onClose }) {
                 <SubmitButton
                   tableSelection={tableSelection}
                   setTableSelection={setTableSelection}
+                  toast={toast}
+                  errors={errors}
                 />
                 <Button
                   onClick={() => {
