@@ -10,7 +10,7 @@ export const reservationsReducer = (state = defaultstate,action) => {
             }
             case RESERVATION_TYPES.REMOVERESERVATION:
                 return {
-                    reservations:  state.reservations.filter(r => r.id !== action.reservationId)
+                    reservations:  state.reservations.filter(r => r.reservationId !== action.reservationId)
                 }
             case RESERVATION_TYPES.CLEARRESERVATION:
                 return {

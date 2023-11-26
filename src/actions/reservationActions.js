@@ -10,6 +10,7 @@ export const addReservation = (reservation) => dispatch => {
       })
 }
 export const removeReservation = (reservationId) => dispatch => {
+    console.log(reservationId)
     dispatch({
         type:RESERVATION_TYPES.REMOVERESERVATION,
         reservationId:reservationId

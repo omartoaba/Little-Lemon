@@ -30,7 +30,7 @@ import { BsFillPersonFill, BsFillTelephoneFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
 
 const workHours = getWorkTimes("10:00 am", "10:00 pm");
-let tablesData = new Map();
+let tablesData = getRandomTableDate();
 const validateDate = (value) => {
   var today = new Date();
   var selectedDate = new Date(value);

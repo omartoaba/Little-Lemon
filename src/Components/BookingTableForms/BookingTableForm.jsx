@@ -33,6 +33,18 @@ function BookingTableForm({ isOpen, onClose, addReservation }) {
       ...data,
       reservationId: Math.floor(Math.random() * 100_000) + 1,
     });
+    onClose();
+    toast({
+      title: "your reservation has been saved.",
+      variant: "left-accent",
+      status: "success",
+      isClosable: true,
+      duration: 3000,
+      position: "top-right",
+      containerStyle: {
+        marginTop: "80px",
+      },
+    });
   };
   return (
     <Modal

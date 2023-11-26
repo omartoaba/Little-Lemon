@@ -7,7 +7,6 @@ const defaultstate = {
 export const userReducer = (state = defaultstate,action) => {
     switch(action.type){
         case ACTION_TYPES.LOGIN:
-            console.log(action.user);
             return {
                 username: action.user.username,
                 password:action.user.password
