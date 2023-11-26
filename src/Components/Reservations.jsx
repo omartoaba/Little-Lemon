@@ -1,37 +1,82 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Reservations.css";
-import BookingTableForm from "./BookingTableForms/BookingTableForm";
-import { Stack } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  IconButton,
+  Stack,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Tfoot,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+import * as actions from "../actions/reservationActions";
+import { connect } from "react-redux";
+import { MdDelete } from "react-icons/md";
 
-function Reservations() {
-  const [availibletimes, setavailibletimes] = useState([
-    { time: "10:00 am", state: "Availible" },
-    { time: "11:00 am", state: "Availible" },
-    { time: "12:00 am", state: "Availible" },
-    { time: "01:00 pm", state: "Availible" },
-    { time: "02:00 pm", state: "Availible" },
-    { time: "03:00 pm", state: "Availible" },
-    { time: "05:00 pm", state: "Availible" },
-    { time: "06:00 pm", state: "Availible" },
-    { time: "07:00 pm", state: "Availible" },
-    { time: "08:00 pm", state: "Availible" },
-    { time: "09:00 pm", state: "Availible" },
-    { time: "10:00 pm", state: "Availible" },
-  ]);
-  // useEffect( async() => {
-  //   try {
-  // var response = await fetchAPI(Date.now);
-
-  //   } catch (error) {
-  // console.log(response);
-  //  }
-  // },[]);
-
+function Reservations(props) {
   return (
-    <Stack mt={"60px"} padding={10}>
-      <BookingTableForm />
+    <Stack padding={10} height={"100%"} spacing={10}>
+      <Heading fontSize={30}>Reservations</Heading>
+      {props.reservations.length > 0 ? (
+        <TableContainer>
+          <Table variant="striped">
+            <TableCaption></TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email Address</Th>
+                <Th>Phone Number</Th>
+                <Th>Reservation Date</Th>
+                <Th>Reservation Time</Th>
+                <Th>Table Number</Th>
+                <Th>Chairs Number</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {props.reservations.map((reservation, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td>{reservation.userName}</Td>
+                    <Td>{reservation.emailAddress}</Td>
+                    <Td>{reservation.phoneNumber}</Td>
+                    <Td>{reservation.reservationDate}</Td>
+                    <Td>{reservation.reservationTime}</Td>
+                    <Td>{reservation.tableNumber}</Td>
+                    <Td>{reservation.chairsNumber}</Td>
+                    <Td>
+                      <IconButton
+                        variant={"outline"}
+                        colorScheme="red"
+                        icon={<MdDelete size={"20"} color="red" />}
+                      />
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Text>you don't have any reservations al the moment.</Text>
+      )}
+      <Button width={200} colorScheme="yellow">
+        Make Reservation
+      </Button>
     </Stack>
   );
 }
-
-export default Reservations;
+const mapActionsToProps = {
+  remove: actions.removeReservation,
+};
+const mapStateToProps = (state) => ({
+  reservations: state.reservationsReducer.reservations,
+});
+export default connect(mapStateToProps, mapActionsToProps)(Reservations);

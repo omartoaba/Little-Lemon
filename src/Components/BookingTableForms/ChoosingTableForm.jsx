@@ -1,28 +1,22 @@
 import {
   Box,
-  HStack,
   Icon,
   Input,
   InputGroup,
   InputLeftElement,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Select,
   Stack,
   Wrap,
   WrapItem,
   Image,
-  Portal,
   Text,
   FormControl,
   FormLabel,
   FormErrorMessage,
-  VisuallyHiddenInput,
+  SimpleGrid,
+  HStack,
+  Spacer,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getRandomTableDate, getWorkTimes } from "../../assets/tablesdata";
 import { FaChair } from "react-icons/fa";
 import { ErrorMessage, Field, useFormikContext } from "formik";
@@ -32,27 +26,26 @@ import {
   NumberInputControl,
   SelectControl,
 } from "formik-chakra-ui";
+import { BsFillPersonFill, BsFillTelephoneFill } from "react-icons/bs";
+import { MdEmail } from "react-icons/md";
 
 const workHours = getWorkTimes("10:00 am", "10:00 pm");
 let tablesData = new Map();
 const validateDate = (value) => {
   var today = new Date();
-  console.log(value);
   var selectedDate = new Date(value);
-  console.log(today);
-  console.log(selectedDate);
   console.log(today > selectedDate);
   if (today > selectedDate)
     return "the Reservation date must be starting from today";
 };
 
-function BookingTableChoosingTableForm({ errors, touched }) {
+function ChoosingTableForm() {
   const formik = useFormikContext();
   const [chairsNumber, setChairsNumber] = useState(2);
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [selectedTableIndex, setSelectedTableIndex] = useState(-1);
-  console.log("rerender occured");
+  console.log("render occured");
   const chairsNumberChanged = (e) => {
     setChairsNumber(e);
     setSelectedTableIndex(-1);
@@ -70,12 +63,70 @@ function BookingTableChoosingTableForm({ errors, touched }) {
   };
   useEffect(() => {
     tablesData = getRandomTableDate();
+    setSelectedTableIndex(-1);
+    console.log("from useEffect");
   }, [selectedTime, selectedDate]);
   return (
-    <Stack spacing={5}>
-      <HStack width={"100%"} spacing={8} justify={"space-between"}>
+    <Stack spacing={2}>
+      <SimpleGrid columns={3} width={"100%"} spacing={5} gap={2}>
         <FormControl
-          isInvalid={errors.reservationDate && touched.reservationDate}
+          isInvalid={formik.errors.userName && formik.touched.userName}
+        >
+          <FormLabel>Name</FormLabel>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <Icon as={BsFillPersonFill} color="gray.300" />
+            </InputLeftElement>
+            <Field
+              as={Input}
+              type="text"
+              name="userName"
+              id="userName"
+              pl={8}
+            />
+          </InputGroup>
+          <FormErrorMessage>{formik.errors.userName}</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={formik.errors.phoneNumber && formik.touched.phoneNumber}
+        >
+          <FormLabel>Phone Number</FormLabel>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <Icon as={BsFillTelephoneFill} color="gray.300" />
+            </InputLeftElement>
+            <Field
+              as={Input}
+              type="number"
+              name="phoneNumber"
+              id="phoneNumber"
+              pl={8}
+            />
+          </InputGroup>
+          <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={formik.errors.emailAddress && formik.touched.emailAddress}
+        >
+          <FormLabel>Email</FormLabel>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <Icon as={MdEmail} color="gray.300" />
+            </InputLeftElement>
+            <Field
+              as={Input}
+              type="email"
+              name="emailAddress"
+              id="emailAddress"
+              pl={8}
+            />
+          </InputGroup>
+          <FormErrorMessage>{formik.errors.emailAddress}</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={
+            formik.errors.reservationDate && formik.touched.reservationDate
+          }
         >
           <FormLabel>Reservation Date</FormLabel>
           <Field
@@ -90,7 +141,7 @@ function BookingTableChoosingTableForm({ errors, touched }) {
             name="reservationDate"
             validate={validateDate}
           />
-          <FormErrorMessage>{errors.reservationDate}</FormErrorMessage>
+          <FormErrorMessage>{formik.errors.reservationDate}</FormErrorMessage>
         </FormControl>
         <SelectControl
           value={selectedTime}
@@ -122,13 +173,13 @@ function BookingTableChoosingTableForm({ errors, touched }) {
             defaultValue: 2,
           }}
         />
-      </HStack>
+      </SimpleGrid>
       <Box
         padding={3}
         bg={"#DEDEDE"}
         borderRadius={10}
         width={"100%"}
-        minHeight={250}
+        minHeight={200}
         mt={6}
         mb={0}
       >
@@ -162,7 +213,12 @@ function BookingTableChoosingTableForm({ errors, touched }) {
                   }
                 >
                   <Box position={"relative"}>
-                    <Image src={data.table} width={40} height={40} />
+                    <Image
+                      src={data.table}
+                      width={40}
+                      height={40}
+                      style={{ transform: "scale(0.8)" }}
+                    />
                     <Text
                       position={"absolute"}
                       top={"50%"}
@@ -187,18 +243,29 @@ function BookingTableChoosingTableForm({ errors, touched }) {
           )}
         </Wrap>
       </Box>
-      <Text
-        mt={-3}
-        fontSize={16}
-        color={selectedTableIndex > -1 ? "black" : "red"}
-      >
-        {selectedTableIndex > -1
-          ? `Selected table number is : ${
-              selectedTableIndex + 1
-            } with number of sets:
+      <HStack>
+        <Text
+          mt={0}
+          fontSize={16}
+          color={selectedTableIndex > -1 ? "black" : "red"}
+        >
+          {selectedTableIndex > -1
+            ? `Selected table number is : ${
+                selectedTableIndex + 1
+              } with number of sets:
         ${chairsNumber}`
-          : "No table was selected."}
-      </Text>
+            : "No table was selected."}
+        </Text>
+        <Spacer />
+        <HStack spacing={2}>
+          <Box bg={"#10B981"} boxSize={5} borderRadius={5} />
+          <Text fontSize={16}>Available</Text>
+          <Box bg={"#F2F259"} boxSize={5} borderRadius={5} />
+          <Text fontSize={16}>Pending</Text>
+          <Box bg={"#F25959"} boxSize={5} borderRadius={5} />
+          <Text fontSize={16}>Booked</Text>
+        </HStack>
+      </HStack>
       <InputControl
         hidden
         name="tableNumber"
@@ -208,4 +275,4 @@ function BookingTableChoosingTableForm({ errors, touched }) {
   );
 }
 
-export default BookingTableChoosingTableForm;
+export default ChoosingTableForm;

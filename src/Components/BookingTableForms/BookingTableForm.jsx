@@ -1,5 +1,4 @@
 import {
-  Stack,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -10,11 +9,11 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { Formik, Form, useFormikContext } from "formik";
-import { useState } from "react";
-import BookingTableInfoForm from "./BookingTableInfoForm";
-import BookingTableChoosingTableForm from "./BookingTableChoosingTableForm";
+import { Formik, Form } from "formik";
+import ChoosingTableForm from "./ChoosingTableForm";
 import * as Yup from "yup";
+import * as actions from "../../actions/reservationActions";
+import { connect } from "react-redux";
 
 const validateSchema = Yup.object({
   reservationTime: Yup.string().min(3).required(),
@@ -27,67 +26,13 @@ const validateSchema = Yup.object({
     .required("Email is Required"),
 });
 
-const SubmitButton = ({ tableSelection, setTableSelection, toast, errors }) => {
-  const formik = useFormikContext();
-  const haserrors =
-    formik.dirty &&
-    !(
-      errors.reservationDate &&
-      errors.reservationTime &&
-      errors.tableNumber &&
-      errors.chairsNumber
-    );
-  return (
-    <Button
-      mr={3}
-      isDisabled={!haserrors}
-      colorScheme="yellow"
-      onClick={() => {
-        if (!tableSelection) {
-          console.log(formik.values);
-          console.log(
-            formik.dirty,
-            errors.reservationDate,
-            errors.reservationTime,
-            errors.tableNumber,
-            errors.chairsNumber
-          );
-          if (
-            formik.dirty &&
-            !(
-              errors.reservationDate &&
-              errors.reservationTime &&
-              errors.tableNumber &&
-              errors.chairsNumber
-            )
-          ) {
-            setTableSelection(true);
-          } else {
-            toast({
-              title: "please resolve all errors before percedding",
-              variant: "left-accent",
-              status: "error",
-              position: "top",
-              isClosable: true,
-              containerStyle: {
-                marginTop: "20px",
-              },
-            });
-          }
-        }
-      }}
-    >
-      {tableSelection ? "Reserve Now" : "Next"}
-    </Button>
-  );
-};
-
-function BookingTableForm({ isOpen, onClose }) {
-  // const formik = useFormikContext();
+function BookingTableForm({ isOpen, onClose, addReservation }) {
   const toast = useToast();
-  const [tableSelection, setTableSelection] = useState(false);
   const handleOnSubmit = (data) => {
-    console.log(data);
+    addReservation({
+      ...data,
+      reservationId: Math.floor(Math.random() * 100_000) + 1,
+    });
   };
   return (
     <Modal
@@ -108,38 +53,23 @@ function BookingTableForm({ isOpen, onClose }) {
           validationSchema={validateSchema}
           onSubmit={handleOnSubmit}
         >
-          {({ handleSubmit, errors, touched }) => (
+          {({ handleSubmit, dirty, isValid }) => (
             <Form onSubmit={handleSubmit}>
               <ModalHeader>Reserve a Table</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                <Stack>
-                  {tableSelection ? (
-                    <BookingTableInfoForm errors={errors} touched={touched} />
-                  ) : (
-                    <BookingTableChoosingTableForm
-                      errors={errors}
-                      touched={touched}
-                    />
-                  )}
-                </Stack>
+                <ChoosingTableForm />
               </ModalBody>
               <ModalFooter>
-                <SubmitButton
-                  tableSelection={tableSelection}
-                  setTableSelection={setTableSelection}
-                  toast={toast}
-                  errors={errors}
-                />
                 <Button
-                  onClick={() => {
-                    if (tableSelection) {
-                      setTableSelection(false);
-                    } else onClose();
-                  }}
+                  type="submit"
+                  mr={5}
+                  colorScheme="yellow"
+                  isDisabled={!dirty || !isValid}
                 >
-                  {tableSelection ? "Back" : "Cancel"}
+                  Reserve Now
                 </Button>
+                <Button onClick={onClose}>Cancel</Button>
               </ModalFooter>
             </Form>
           )}
@@ -148,5 +78,7 @@ function BookingTableForm({ isOpen, onClose }) {
     </Modal>
   );
 }
-
-export default BookingTableForm;
+const mapActionsToProps = {
+  addReservation: actions.addReservation,
+};
+export default connect(null, mapActionsToProps)(BookingTableForm);
