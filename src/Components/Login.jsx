@@ -31,7 +31,7 @@ function Login(props) {
   };
   const onLoginSubmit = (data) => {
     props.login({ username: data.username, password: data.password });
-    navigate("/home");
+    navigate("/#/home");
   };
   return (
     <>
