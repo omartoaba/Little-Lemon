@@ -64,7 +64,7 @@ function ChoosingTableForm() {
   useEffect(() => {
     tablesData = getRandomTableDate();
     setSelectedTableIndex(-1);
-    console.log("from useEffect");
+    // console.log("from useEffect");
   }, [selectedTime, selectedDate]);
   return (
     <Stack spacing={2}>
