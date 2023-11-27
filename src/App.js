@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Components/Home';
 import Reservations from './Components/Reservations';
 import Container from './Components/Container';
@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './actions/store';
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
     <Provider store={store}>
     <ChakraProvider toastOptions={{defaultOptions: { position: 'top-right' }}}>
       <Container>
@@ -22,7 +22,7 @@ function App() {
       </Container>
     </ChakraProvider>
     </Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 } 
 
