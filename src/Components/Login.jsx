@@ -22,7 +22,6 @@ import { BiSolidShow, BiSolidHide } from "react-icons/bi";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { useNavigate } from "react-router-dom";
 function Login(props) {
-  const values = useFormikContext();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -31,7 +30,7 @@ function Login(props) {
   };
   const onLoginSubmit = (data) => {
     props.login({ username: data.username, password: data.password });
-    navigate("/#/home");
+    navigate("/home");
   };
   return (
     <>
