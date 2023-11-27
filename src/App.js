@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/home" element={<Home/>}></Route>
-          <Route path="/" element={<Navigate to={"/home"}/>}></Route>
+          <Route path="/" element={<Navigate to={"/login"}/>}></Route>
           <Route path="/reservations" element={<Reservations/>}></Route>
         </Routes>
       </Container>
