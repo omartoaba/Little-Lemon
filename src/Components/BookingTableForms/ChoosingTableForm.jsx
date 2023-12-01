@@ -81,6 +81,7 @@ function ChoosingTableForm() {
               as={Input}
               type="text"
               name="userName"
+              data-testid="userName"
               id="userName"
               pl={8}
             />
@@ -99,6 +100,7 @@ function ChoosingTableForm() {
               as={Input}
               type="number"
               name="phoneNumber"
+              data-testid="phoneNumber"
               id="phoneNumber"
               pl={8}
             />
@@ -118,6 +120,7 @@ function ChoosingTableForm() {
               type="email"
               name="emailAddress"
               id="emailAddress"
+              data-testid="email"
               pl={8}
             />
           </InputGroup>
@@ -138,6 +141,7 @@ function ChoosingTableForm() {
             value={selectedDate}
             type="date"
             id="reservationDate"
+            data-testid="reservationDate"
             name="reservationDate"
             validate={validateDate}
           />
@@ -148,6 +152,7 @@ function ChoosingTableForm() {
           defaultValue={workHours[0]}
           label="Reservarion Time"
           name="reservationTime"
+          data-testid="reservationTime"
           selectProps={{ placeholder: "Select Time" }}
           onChange={(e) => {
             setSelectedTime(e.target.value);
@@ -164,6 +169,7 @@ function ChoosingTableForm() {
         <NumberInputControl
           name="chairsNumber"
           label="Chairs Number"
+          data-testid="chairsNumber"
           numberInputProps={{
             value: chairsNumber,
             onChange: chairsNumberChanged,
@@ -269,6 +275,7 @@ function ChoosingTableForm() {
       <InputControl
         hidden
         name="tableNumber"
+        data-testid="tableNumber"
         inputProps={{ value: selectedTableIndex + 1 }}
       />
     </Stack>

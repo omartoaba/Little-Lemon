@@ -21,6 +21,7 @@ import * as actions from "../actions/userActions";
 import { BiSolidShow, BiSolidHide } from "react-icons/bi";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { useNavigate } from "react-router-dom";
+
 function Login(props) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -74,7 +75,12 @@ function Login(props) {
                             form.errors.username && form.touched.username
                           }
                         >
-                          <Input placeholder="User name" {...field} size="md" />
+                          <Input
+                            placeholder="User name"
+                            {...field}
+                            size="md"
+                            data-testid="username"
+                          />
                           <FormErrorMessage>
                             {form.errors.username}
                           </FormErrorMessage>
@@ -94,6 +100,7 @@ function Login(props) {
                               type={show ? "text" : "password"}
                               placeholder="Password"
                               {...field}
+                              data-testid="password"
                             />
                             <FormErrorMessage>
                               {form.errors.username}
@@ -113,7 +120,11 @@ function Login(props) {
                         </DarkMode>
                       </InputRightElement>
                     </InputGroup>
-                    <Button type="submit" colorScheme="yellow">
+                    <Button
+                      type="submit"
+                      colorScheme="yellow"
+                      data-testid="login"
+                    >
                       Login
                     </Button>
                   </Stack>

@@ -29,13 +29,15 @@ const validateSchema = Yup.object({
 function BookingTableForm({ isOpen, onClose, addReservation }) {
   const toast = useToast();
   const handleOnSubmit = (data) => {
+    console.log(data);
     addReservation({
       ...data,
       reservationId: Math.floor(Math.random() * 100_000) + 1,
     });
     onClose();
     toast({
-      title: "your reservation has been saved.",
+      title:
+        "your reservation is confirmed. we've sent a confirmation message to your email.",
       variant: "left-accent",
       status: "success",
       isClosable: true,
@@ -76,6 +78,7 @@ function BookingTableForm({ isOpen, onClose, addReservation }) {
                 <Button
                   type="submit"
                   mr={5}
+                  data-testid="reservenow"
                   colorScheme="yellow"
                   isDisabled={!dirty || !isValid}
                 >
