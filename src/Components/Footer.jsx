@@ -7,17 +7,17 @@ import {
   Image,
   List,
   ListItem,
-  ListIcon,
   Button,
   Icon,
   DarkMode,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
 import FooterBanner from "../assets/footerImg.jpg";
 import FooterLogo from "../assets/footerlogo.png";
 import {
   MdHome,
-  MdInfo,
   MdRestaurantMenu,
   MdTableRestaurant,
   MdRestaurant,
@@ -42,7 +42,11 @@ function Footer() {
           </Text>
         </Stack>
         <Spacer />
-        <Image src={FooterBanner} borderRadius="full" boxSize="230px" />
+        <Image
+          src={FooterBanner}
+          borderRadius="full"
+          boxSize={{ base: "150px", md: "230px" }}
+        />
       </HStack>
       <HStack
         background={"var(--seconday-color)"}
@@ -53,117 +57,124 @@ function Footer() {
         color={"white"}
       >
         <Image src={FooterLogo} aspectRatio={"auto"} width={70} />
-        <HStack
+        <Wrap
           justifyContent={"space-between"}
           width={"100%"}
           ml={20}
           mr={20}
           align={"start"}
+          spacing={10}
         >
-          <Stack>
-            <Heading size={"md"}>Navigation</Heading>
-            <DarkMode>
-              <List spacing={0}>
-                <ListItem color={"white"}>
-                  <Link href="/home">
+          <WrapItem>
+            <Stack>
+              <Heading size={"md"}>Navigation</Heading>
+              <DarkMode>
+                <List spacing={0}>
+                  <ListItem color={"white"}>
+                    <Link href="/home">
+                      <Button
+                        background={"transparent"}
+                        leftIcon={<Icon as={MdHome} size={20} />}
+                        alignItems={"center"}
+                        color={"white"}
+                      >
+                        <Link to={"home"}>Home</Link>
+                      </Button>
+                    </Link>
+                  </ListItem>
+                  <ListItem color={"white"}>
+                    <Link href="menu">
+                      <Button
+                        background={"transparent"}
+                        leftIcon={<Icon as={MdRestaurantMenu} size={20} />}
+                        alignItems={"center"}
+                        color={"white"}
+                      >
+                        <Link to={"menu"}>Menu</Link>
+                      </Button>
+                    </Link>
+                  </ListItem>
+                  <ListItem color={"white"}>
                     <Button
                       background={"transparent"}
-                      leftIcon={<Icon as={MdHome} size={20} />}
+                      leftIcon={<Icon as={MdTableRestaurant} size={20} />}
                       alignItems={"center"}
                       color={"white"}
                     >
-                      <Link to={"home"}>Home</Link>
+                      <Link to={"reservations"}>Reservations</Link>
                     </Button>
-                  </Link>
-                </ListItem>
-                <ListItem color={"white"}>
-                  <Link href="menu">
-                    <Button
-                      background={"transparent"}
-                      leftIcon={<Icon as={MdRestaurantMenu} size={20} />}
-                      alignItems={"center"}
-                      color={"white"}
-                    >
-                      <Link to={"menu"}>Menu</Link>
-                    </Button>
-                  </Link>
-                </ListItem>
-                <ListItem color={"white"}>
-                  <Button
-                    background={"transparent"}
-                    leftIcon={<Icon as={MdTableRestaurant} size={20} />}
-                    alignItems={"center"}
-                    color={"white"}
-                  >
-                    <Link to={"reservations"}>Reservations</Link>
-                  </Button>
-                </ListItem>
-                <ListItem color={"white"}>
-                  <Link href="reservations">
-                    <Button
-                      background={"transparent"}
-                      leftIcon={<Icon as={MdRestaurant} size={20} />}
-                      alignItems={"center"}
-                      color={"white"}
-                    >
-                      <Link to={"order"}>Order</Link>
-                    </Button>
-                  </Link>
-                </ListItem>
-              </List>
-            </DarkMode>
-          </Stack>
-          <Stack>
-            <Heading size={"md"}>Contact</Heading>
-            <Text width={200} fontSize={"md"}>
-              2395 Maldove Way, Chicago Illinios (629)-243-6827
-              info@littlelemon.com
-            </Text>
-          </Stack>
-          <Stack>
-            <Heading size={"md"}>Connect</Heading>
-            <DarkMode>
-              <List spacing={0}>
-                <ListItem color={"white"}>
-                  <Link href="https://www.facebook.com">
-                    <Button
-                      background={"transparent"}
-                      leftIcon={<Icon as={MdFacebook} size={20} />}
-                      alignItems={"center"}
-                      color={"white"}
-                    >
-                      Facebook
-                    </Button>
-                  </Link>
-                </ListItem>
-                <ListItem color={"white"}>
-                  <Link href="https://www.instagram.com">
-                    <Button
-                      background={"transparent"}
-                      leftIcon={<Icon as={BiLogoInstagramAlt} size={20} />}
-                      alignItems={"center"}
-                      color={"white"}
-                    >
-                      Instagram
-                    </Button>
-                  </Link>
-                </ListItem>
-                <ListItem color={"white"}>
-                  <Link href="/">
-                    <Button
-                      background={"transparent"}
-                      leftIcon={<Icon as={MdEmail} size={20} />}
-                      alignItems={"center"}
-                      color={"white"}
-                    >
-                      Join Us!
-                    </Button>
-                  </Link>
-                </ListItem>
-              </List>
-            </DarkMode>
-          </Stack>
-        </HStack>
+                  </ListItem>
+                  <ListItem color={"white"}>
+                    <Link href="reservations">
+                      <Button
+                        background={"transparent"}
+                        leftIcon={<Icon as={MdRestaurant} size={20} />}
+                        alignItems={"center"}
+                        color={"white"}
+                      >
+                        <Link to={"order"}>Order</Link>
+                      </Button>
+                    </Link>
+                  </ListItem>
+                </List>
+              </DarkMode>
+            </Stack>
+          </WrapItem>
+          <WrapItem>
+            <Stack>
+              <Heading size={"md"}>Contact</Heading>
+              <Text width={200} fontSize={"md"}>
+                2395 Maldove Way, Chicago Illinios (629)-243-6827
+                info@littlelemon.com
+              </Text>
+            </Stack>
+          </WrapItem>
+          <WrapItem>
+            <Stack>
+              <Heading size={"md"}>Connect</Heading>
+              <DarkMode>
+                <List spacing={0}>
+                  <ListItem color={"white"}>
+                    <Link href="https://www.facebook.com">
+                      <Button
+                        background={"transparent"}
+                        leftIcon={<Icon as={MdFacebook} size={20} />}
+                        alignItems={"center"}
+                        color={"white"}
+                      >
+                        Facebook
+                      </Button>
+                    </Link>
+                  </ListItem>
+                  <ListItem color={"white"}>
+                    <Link href="https://www.instagram.com">
+                      <Button
+                        background={"transparent"}
+                        leftIcon={<Icon as={BiLogoInstagramAlt} size={20} />}
+                        alignItems={"center"}
+                        color={"white"}
+                      >
+                        Instagram
+                      </Button>
+                    </Link>
+                  </ListItem>
+                  <ListItem color={"white"}>
+                    <Link href="/">
+                      <Button
+                        background={"transparent"}
+                        leftIcon={<Icon as={MdEmail} size={20} />}
+                        alignItems={"center"}
+                        color={"white"}
+                      >
+                        Join Us!
+                      </Button>
+                    </Link>
+                  </ListItem>
+                </List>
+              </DarkMode>
+            </Stack>
+          </WrapItem>
+        </Wrap>
       </HStack>
     </Stack>
   );
