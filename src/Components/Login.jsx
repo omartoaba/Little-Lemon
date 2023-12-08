@@ -42,16 +42,22 @@ function Login(props) {
         height={"100vh"}
         width={"100vw"}
       >
-        <HStack width={"1000px"} height={"500px"} spacing={0}>
+        <Stack
+          width={{ base: "98%", lg: "800px", xl: "1000px" }}
+          height={{ base: "98%", md: "500px" }}
+          spacing={0}
+          direction={{ base: "column", md: "row", lg: "row" }}
+        >
           <Stack
             boxShadow={"md"}
             justify={"center"}
             spacing={5}
             bg={"white"}
-            height={"500px"}
+            width={{ base: "100%", md: "50%" }}
+            height={"100%"}
             padding={"10"}
             mr={"0"}
-            borderRadius={"10px 0 0 10px"}
+            borderRadius={{ base: "10px 10px 0 0", md: "10px 0 0 10px" }}
           >
             <Image src={Logo} width={"200px"} margin={"0 auto"} />
             <Heading size={"lg"} margin={"0 auto"}>
@@ -135,12 +141,13 @@ function Login(props) {
           <Image
             boxShadow={"md"}
             src={LoginImage}
-            borderRadius={"0 10px 10px 0"}
-            boxSize="500px"
+            borderRadius={{ base: "0 0 10px 10px", md: "0 10px 10px 0" }}
+            height={"100%"}
+            width={{ base: "100%", md: "50%" }}
             ml={"0"}
             objectFit="cover"
           />
-        </HStack>
+        </Stack>
       </Stack>
     </>
   );
