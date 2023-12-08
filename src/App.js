@@ -24,6 +24,6 @@ function App() {
     </Provider>
     </HashRouter>
   );
-} 
+}
 
 export default App;

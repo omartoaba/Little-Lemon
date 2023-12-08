@@ -11,7 +11,7 @@ function Container(props) {
 
   const isLoginPage = location.pathname === "/login";
   return (
-    <Stack spacing={5} justify={"space-between"}>
+    <Stack spacing={5} justify={"space-between"} minWidth={"100vw"}>
       {isLoginPage ? (
         <Login />
       ) : (
