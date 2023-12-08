@@ -50,7 +50,6 @@ const NavLinks = ({ display }) => {
     <Box display={display}>
       <nav>
         <Stack direction={{ base: "column", md: "row" }} align={"flex-start"}>
-          {/* <ul className="navbar_links"> */}
           <li className="navbar_link">
             <Link to="home">Home</Link>
           </li>
@@ -66,7 +65,6 @@ const NavLinks = ({ display }) => {
           <li className="navbar_link">
             <Link to="orderonline">Order Online</Link>
           </li>
-          {/* </ul> */}
         </Stack>
       </nav>
     </Box>
@@ -91,11 +89,14 @@ function Nav(props) {
         </DrawerContent>
       </Drawer>
       <HStack
-        padding="5px 15px"
+        paddingY={"10px"}
         justify={"center"}
         bg={"white"}
         width={"100%"}
+        maxWidth={"100vw"}
         spacing={5}
+        paddingX={"20px"}
+        pr={{ base: "30px", md: "20px" }}
       >
         <IconButton
           icon={<GiHamburgerMenu />}

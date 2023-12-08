@@ -29,10 +29,20 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <Stack spacing={0} id="about">
-      <HStack background={"var(--primary-color)"} padding={10} align={"start"}>
+      <HStack
+        background={"var(--primary-color)"}
+        padding={{ base: 5, md: 10 }}
+        align={"start"}
+      >
         <Stack>
           <Heading size={"lg"}>Little Lemon Chicago</Heading>
-          <Text fontSize={"md"} fontWeight={700} maxW={400} lineHeight={1.3}>
+          <Text
+            fontSize={{ base: "sm", md: "md" }}
+            fontWeight={700}
+            maxW={400}
+            lineHeight={1.3}
+            textAlign={"justify"}
+          >
             Little Lemon opened in 1995 by two Italian brothers, Adrian and
             Mario. Despite the city's diversity, the two brothers recongnized
             the lack of Mediterranean cuisine in Chicago, and were inspired to
@@ -50,7 +60,7 @@ function Footer() {
       </HStack>
       <HStack
         background={"var(--seconday-color)"}
-        paddingX={150}
+        paddingX={{ base: 50, md: 100, lg: 150 }}
         paddingY={10}
         align={"start"}
         justifyContent={"space-between"}

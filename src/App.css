@@ -2,6 +2,7 @@
 .App {
   display: flex;
   text-align: center;
+  width: "100vw";
 }
 h1 {
   font-family: "Markazi Text";

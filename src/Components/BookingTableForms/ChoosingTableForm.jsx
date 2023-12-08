@@ -68,7 +68,12 @@ function ChoosingTableForm() {
   }, [selectedTime, selectedDate]);
   return (
     <Stack spacing={2}>
-      <SimpleGrid columns={3} width={"100%"} spacing={5} gap={2}>
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: 3 }}
+        width={"100%"}
+        spacing={5}
+        gap={2}
+      >
         <FormControl
           isInvalid={formik.errors.userName && formik.touched.userName}
         >

@@ -8,14 +8,13 @@ import Login from "./Login";
 
 function Container(props) {
   const location = useLocation();
-
   const isLoginPage = location.pathname === "/login";
   return (
-    <Stack spacing={5} justify={"space-between"} minWidth={"100vw"}>
+    <>
       {isLoginPage ? (
         <Login />
       ) : (
-        <>
+        <Stack spacing={5} width={"100vw"}>
           <header className="mainnavbar">
             <Nav />
           </header>
@@ -25,9 +24,9 @@ function Container(props) {
           <footer>
             <Footer />
           </footer>
-        </>
+        </Stack>
       )}
-    </Stack>
+    </>
   );
 }
 

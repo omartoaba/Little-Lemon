@@ -11,7 +11,7 @@ function App() {
   return (
     <HashRouter>
     <Provider store={store}>
-    <ChakraProvider toastOptions={{defaultOptions: { position: 'top-right' }}}>
+    <ChakraProvider toastOptions={{defaultOptions: { position: 'top-right' }}}> 
       <Container>
         <Routes>
           <Route path="/login" element={<Login/>}></Route>

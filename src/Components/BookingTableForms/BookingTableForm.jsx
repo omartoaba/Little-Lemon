@@ -53,7 +53,7 @@ function BookingTableForm({ isOpen, onClose, addReservation }) {
       closeOnOverlayClick={false}
       isOpen={isOpen}
       onClose={onClose}
-      size={"4xl"}
+      size={{ base: "md", md: "2xl", lg: "4xl" }}
     >
       <ModalOverlay />
       <ModalContent>
