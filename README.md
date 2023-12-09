@@ -33,8 +33,8 @@ home page with Cart and Logged user Functionality
 
 ### Responsive Design
 
-![image](./screenshots/mobile.png)
-![image](./screenshots/sidenavigation.png)
+![image](./screenshots/mobile.png) ![image](./screenshots/sidenavigation.png)
+
 
 ## Tech Stack
 
