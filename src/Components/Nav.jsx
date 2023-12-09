@@ -3,27 +3,7 @@ import Logo from "../assets/Logo.svg";
 import "./Nav.css";
 import {
   HStack,
-  Avatar,
-  AvatarBadge,
   Spacer,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  Text,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverBody,
-  Button,
-  Divider,
-  PopoverFooter,
-  TableContainer,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Td,
-  Th,
   IconButton,
   useToast,
   Image,
@@ -34,22 +14,20 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
-  DrawerFooter,
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
-import { connect } from "react-redux";
-import { FaShoppingCart } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import * as actions from "../actions/userActions";
-import * as cartActions from "../actions/cartActions";
+
+import CartPopover from "./CartPopover";
+import UserPopover from "./UserPopover";
+
 const NavLinks = ({ display }) => {
   return (
     <Box display={display}>
       <nav>
-        <Stack direction={{ base: "column", md: "row" }} align={"flex-start"}>
+        <Stack direction={{ base: "column", lg: "row" }} align={"flex-start"}>
           <li className="navbar_link">
             <Link to="home">Home</Link>
           </li>
@@ -70,10 +48,8 @@ const NavLinks = ({ display }) => {
     </Box>
   );
 };
-function Nav(props) {
+function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
-  const toast = useToast();
   return (
     <>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -95,8 +71,9 @@ function Nav(props) {
         width={"100%"}
         maxWidth={"100vw"}
         spacing={5}
-        paddingX={"20px"}
-        pr={{ base: "30px", md: "20px" }}
+        px={"10px"}
+        // paddingX={"20px"}
+        // pr={{ base: "0px", md: "20px" }}
       >
         <IconButton
           icon={<GiHamburgerMenu />}
@@ -109,7 +86,7 @@ function Nav(props) {
           <NavLinks display={{ base: "none", lg: "flex" }} />
         </HStack>
         <Spacer />
-        <Popover placement="bottom" closeOnBlur={true}>
+        {/* <Popover placement="auto" closeOnBlur={true}>
           <PopoverTrigger>
             <Avatar
               cursor={"pointer"}
@@ -216,7 +193,7 @@ function Nav(props) {
             </PopoverFooter>
           </PopoverContent>
         </Popover>
-        <Popover placement="bottom" closeOnBlur={true}>
+        <Popover placement="auto" closeOnBlur={true}>
           <PopoverTrigger>
             <Avatar
               cursor={"pointer"}
@@ -252,19 +229,11 @@ function Nav(props) {
               </Button>
             </PopoverBody>
           </PopoverContent>
-        </Popover>
+        </Popover> */}
+        <CartPopover />
+        <UserPopover />
       </HStack>
     </>
   );
 }
-const mapStateToProps = (state) => ({
-  username: state.userReducer.username,
-  password: state.userReducer.password,
-  products: state.cartReducer.products,
-});
-const mapActionsToProps = {
-  logout: actions.logout,
-  clearCart: cartActions.clearCart,
-  removeProduct: cartActions.removeProduct,
-};
-export default connect(mapStateToProps, mapActionsToProps)(Nav);
+export default Nav;

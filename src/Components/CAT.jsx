@@ -42,7 +42,7 @@ const specials = [
 
 function CAT() {
   return (
-    <Stack spacing={20} padding={20} justifyContent={"center"}>
+    <Stack spacing={20} paddingX={"10px"} justifyContent={"center"}>
       <Flex align={"center"}>
         <Heading fontSize={{ base: "xl", md: "2xl", lg: "4xl" }}>
           Week Specials
