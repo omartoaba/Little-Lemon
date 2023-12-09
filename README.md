@@ -1,6 +1,6 @@
 # Little Lemon Restaurant
 
-Little Lemon is website for fictional website, it was created as part of Final capstone project for Meta Font-end developer programm
+Little Lemon is a website for a fictional restaurant, it was created as part of the Final capstone project for the Meta Front-end developer program
 
 ## Live Demo
 
@@ -33,8 +33,8 @@ home page with Cart and Logged user Functionality
 
 ### Responsive Design
 
-![image](./screenshots/mobile.png)
-![image](./screenshots/sidenavigation.png)
+![image](./screenshots/mobile.png) ![image](./screenshots/sidenavigation.png)
+
 
 ## Tech Stack
 
@@ -46,7 +46,7 @@ home page with Cart and Logged user Functionality
 ## Third Party Libraries
 
 - react-router-dom
-- Chackra UI
+- Chakra UI
 - react-icons
-- Fomik
+- Formik
 - Yup
