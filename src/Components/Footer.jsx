@@ -56,6 +56,7 @@ function Footer() {
           src={FooterBanner}
           borderRadius="full"
           boxSize={{ base: "150px", md: "230px" }}
+          loading="lazy"
         />
       </HStack>
       <HStack
@@ -66,9 +67,14 @@ function Footer() {
         justifyContent={"space-between"}
         color={"white"}
       >
-        <Image src={FooterLogo} aspectRatio={"auto"} width={70} />
+        <Image
+          src={FooterLogo}
+          aspectRatio={"auto"}
+          width={70}
+          loading="lazy"
+        />
         <Wrap
-          justifyContent={"space-between"}
+          justify={"space-between"}
           width={"100%"}
           ml={20}
           mr={20}

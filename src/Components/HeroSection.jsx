@@ -62,7 +62,7 @@ function HeroSection() {
           mb={"-150px"}
           display={{ base: "none", md: "flex" }}
           ml={"20px"}
-          // mr={{ base: "10px", md: "0" }}
+          loading="lazy"
           borderRadius={"10"}
         />
       </HStack>
